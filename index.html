@@ -11,6 +11,12 @@
         <link href="./css/styles.css" rel="stylesheet">
     </head>
     <body>  
+        <label for="force diagram steps">Force Step:</label>
+        <select name="force diagram steps" id="force_steps">
+        <option value="1">Step 1</option>
+        <option value="2">Step 2</option>
+        </select>      
+        <div id="force"></div>
         <label for="line chart steps">Line Chart Step:</label>
         <select name="line chart steps" id="linechart_steps">
         <option value="1">Step 1</option>
@@ -19,6 +25,7 @@
         <div id="linechart"></div>
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="force.js"></script>
     <script src="linechart.js"></script>
     <script>
         async function init(){
@@ -36,6 +43,13 @@
                 line_vis.update(linechart_step_select.value)
             });
 
+            let force_vis = force(data, mapping)
+
+            var force_step_select = document.getElementById("force_steps");
+
+            force_step_select.addEventListener("change", function() {
+                force_vis.update(force_step_select.value)
+            });
         }
         init()
 
