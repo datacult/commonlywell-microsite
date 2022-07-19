@@ -1,6 +1,6 @@
 'use strict'
 
-let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', step:'step_value'}, step = 1, selector = '#force') => {
+let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') => {
 
     ////////////////////////////////////
     //////////// svg setup /////////////
@@ -40,17 +40,43 @@ let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', s
     //////////////wrangle///////////////
     ////////////////////////////////////
 
+    const layouts = [
+        [{x: 0.5, y: 0.5}],
+        [{x: 0.2, y: 0.5}, {x: 0.8, y: 0.5}],
+        [{x: 0.2, y: 0.2}, {x: 0.8, y: 0.2}, {x: 0.5, y: 0.8}],
+        [{x: 0.2, y: 0.2}, {x: 0.8, y: 0.2}, {x: 0.2, y: 0.8}, {x: 0.8, y: 0.8}],
+        [{x: 0.2, y: 0.2}, {x: 0.8, y: 0.2}, {x: 0.2, y: 0.8}, {x: 0.8, y: 0.8}, {x: 0.5, y: 0.5}]
+    ]
+
+    const options = ['provider','location','gender','race']
+
     data.forEach(d => {
-        d['1'] = {x: 0.2, y: 0.2}
-        d['2'] = {x: 0.8, y: 0.8}
+        d.coords = {}
     });
+
+    let label_coords = []
+
+    for(let option of options){
+
+        const values = Array.from(new Set(data.map(d => d[option])))
+
+        values.forEach(d => {
+            label_coords.push([option, d, layouts[values.length-1][values.indexOf(d)]])
+        })
+
+        data.forEach(d => {
+            d.coords[option] = layouts[values.length-1][values.indexOf(d[option])]
+        });
+
+    }
+
+    console.log(label_coords)
 
     ////////////////////////////////////
     //////////////globals///////////////
     ////////////////////////////////////
 
     const radius = 5
-    const group = data_map.color
     
     ////////////////////////////////////
     //////////////scales////////////////
@@ -64,9 +90,9 @@ let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', s
         .range([height, 0])
         .domain([0,1])
 
-    const colorScale = d3.scaleOrdinal()
-        .domain(data.map(d => d[group]))
-        .range(d3.schemeTableau10)
+    const colorScale = d3.scaleSequential()
+        .domain([0,100])
+        .interpolator(d3.interpolateViridis)
 
     ////////////////////////////////////
     /////////simulation setup///////////
@@ -88,19 +114,28 @@ let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', s
         .data(data)
         .join('circle')
         .attr('r', radius)
-        .attr('fill', d => colorScale(d[group]))
-        .attr('cy', d => yScale(d[step]))
-        .attr('cx', d => xScale(d[step]))
+        .attr('fill', d => colorScale(d[color]))
+        .attr('cy', d => yScale(d.coords[select]))
+        .attr('cx', d => xScale(d.coords[select]))
         .attr('class', 'balls')
+
+    let labels = svg.selectAll('.labels')
+        .data(label_coords.filter(d => d[0] == select))
+        .join('text')
+        .text(d => d[1])
+        .attr('text-anchor', "middle")
+        .attr('y', d => yScale(d[2].y) - 20)
+        .attr('x', d => xScale(d[2].x))
+        .attr('class', 'labels')
 
 
     var simulation = d3.forceSimulation(data)
         .force('y', d3.forceY(d =>
-                yScale(d[step].y)
+                yScale(d.coords[select].y)
             ).strength(0.5)
         )
         .force('x', d3.forceX(d => 
-                xScale(d[step].x)
+                xScale(d.coords[select].x)
             ).strength(0.5)
         )
         .force('collide', d3.forceCollide(radius * 1.1))
@@ -114,16 +149,26 @@ let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', s
         simulation.alphaDecay(0.1);
     }, 8000);
 
-    function update(val) {
+    function update(val, val2) {
 
-        step = val;
+        select = val;
+        color = val2;
+
+        labels
+        .data(label_coords.filter(d => d[0] == select))
+        .join()
+        .text(d => d[1])
+        .attr('y', d => yScale(d[2].y) - 20)
+        .attr('x', d => xScale(d[2].x))
+
+        balls.attr('fill', d => colorScale(d[color]))
 
         simulation.force('x', d3.forceX(function (d) {
-            return xScale(d[step].x)
+            return xScale(d.coords[select].x)
         }))
 
         simulation.force('y', d3.forceY(function (d) {
-            return yScale(d[step].y)
+            return yScale(d.coords[select].y)
         }))
 
 
@@ -139,7 +184,7 @@ let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', s
             simulation.alphaDecay(0.1);
         }, 8000);
 
-        return step
+        return select
     }
 
     return {
