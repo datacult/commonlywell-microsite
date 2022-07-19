@@ -1,0 +1,46 @@
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(255, 255, 250);
+    margin: 0;
+}
+h1{
+    margin: 0;
+    padding:10px 0 10px 2%;
+    background-color: #29516E;
+    color:white;
+
+}
+div.tooltip {
+    position: absolute;
+    padding: 10px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px;
+    border-radius: 3px;
+    pointer-events: none;
+    border-style: solid;
+}
+#description{
+    margin:0 2% 0 2%
+}
+#vis-container{
+    margin:0
+}
+p{
+    font-size: 14px;
+
+}
+rect, path, line {
+    transition: all 0.5s ease-in-out;
+}
+.grid{
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8em;
+    font-weight: 300;
+}
+.grid path{
+    color:rgba(0,0,0,0)
+}
+.grid line{
+    color:lightgrey
+}

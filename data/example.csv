@@ -1,0 +1,9 @@
+x_value,y_value,color_value,step_value
+0,20,group_1,1
+30,40,group_1,1
+60,30,group_1,1
+90,40,group_1,1
+0,10,group_2,2
+30,00,group_2,2
+60,40,group_2,2
+90,30,group_2,2

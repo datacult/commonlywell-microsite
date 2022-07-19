@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;600&display=swap" rel="stylesheet">
+        <link href="./css/styles.css" rel="stylesheet">
+    </head>
+    <body>  
+        <label for="line chart steps">Line Chart Step:</label>
+        <select name="line chart steps" id="linechart_steps">
+        <option value="1">Step 1</option>
+        <option value="2">Step 2</option>
+        </select>      
+        <div id="linechart"></div>
+    </body>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="linechart.js"></script>
+    <script>
+        async function init(){
+            let data = await d3.csv('../data/example.csv', d3.autoType)
+
+            console.log(data)
+
+            let mapping = {x:'x_value', y:'y_value', color:'color_value', step:'step_value'}
+
+            let line_vis = linechart(data, mapping)
+
+            var linechart_step_select = document.getElementById("linechart_steps");
+
+            linechart_step_select.addEventListener("change", function() {
+                line_vis.update(linechart_step_select.value)
+            });
+
+        }
+        init()
+
+    </script>
+
+</html>
