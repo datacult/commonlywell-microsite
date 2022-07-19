@@ -18,7 +18,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value
     }
 
     // responsive width & height
-    const svgWidth = parseInt(d3.select(selector).style('width'))
+    const svgWidth = parseInt(d3.select(selector).style('width'), 10)
     const svgHeight = (svgWidth / 2)
 
     // helper calculated variables for inner width & height

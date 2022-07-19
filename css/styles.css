@@ -44,3 +44,7 @@ rect, path, line {
 .grid line{
     color:lightgrey
 }
+
+#force, #linechart {
+    width:50%
+}

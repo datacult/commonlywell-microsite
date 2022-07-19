@@ -18,8 +18,8 @@ let force = ((data, data_map = {x:'x_value', y:'y_value', color:'color_value', s
     }
 
     // responsive width & height
-    const svgWidth = parseInt(d3.select(selector).style('width'), 10) / 2
-    const svgHeight = svgWidth
+    const svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    const svgHeight = svgWidth / 2
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
