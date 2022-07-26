@@ -1,13 +1,13 @@
-participant,rci_30,rci_60,rci_90,personal_30,personal_60,personal_90,social_30,social_60,social_90,cultural_30,cultural_60,cultural_90,provider,location,gender,race
-1,30,40,20,20,35,30,40,45,40,30,30,20,Provider 1,Location 1,Male,White
-2,30,40,20,20,35,30,40,45,40,30,30,20,Provider 2,Location 1,Female,White
-3,30,40,20,20,35,30,40,45,40,30,30,20,Provider 1,Location 2,Female,Black
-4,30,40,20,20,35,30,40,45,40,30,30,20,Provider 3,Location 3,Non-Binary,Asian
-5,40,60,30,30,35,30,40,45,40,30,30,20,Provider 1,Location 1,Male,White
-6,40,60,30,30,35,30,40,45,40,30,30,20,Provider 4,Location 2,Male,Black
-7,40,60,30,30,35,30,40,45,40,30,30,20,Provider 4,Location 2,Female,Black
-8,40,60,30,30,35,30,40,45,40,30,30,20,Provider 3,Location 3,Non-Binary,Asian
-9,60,40,30,40,35,30,40,45,40,40,30,20,Provider 1,Location 1,Male,White
-10,60,40,30,40,35,30,40,45,40,40,30,20,Provider 2,Location 1,Male,Asian
-11,60,40,30,40,35,30,40,45,40,40,30,20,Provider 2,Location 2,Female,Black
-12,60,40,30,40,35,30,40,45,40,40,30,20,Provider 3,Location 3,Non-Binary,Asian
+participant,date,rci,personal,social,cultural,provider,location,gender,race
+1,01-01-2020,30,20,40,30,Provider 1,Location 1,Male,White
+2,01-01-2020,30,20,40,30,Provider 2,Location 1,Female,White
+3,01-01-2020,30,20,40,30,Provider 1,Location 2,Female,Black
+4,01-01-2020,30,20,40,30,Provider 3,Location 3,Non-Binary,Asian
+5,01-01-2020,40,30,40,30,Provider 1,Location 1,Male,White
+6,01-01-2020,40,30,40,30,Provider 4,Location 2,Male,Black
+7,01-01-2020,40,30,40,30,Provider 4,Location 2,Female,Black
+8,01-01-2020,40,30,40,30,Provider 3,Location 3,Non-Binary,Asian
+9,01-01-2020,60,40,40,40,Provider 1,Location 1,Male,White
+10,01-01-2020,60,40,40,40,Provider 2,Location 1,Male,Asian
+11,01-01-2020,60,40,40,40,Provider 2,Location 2,Female,Black
+12,01-01-2020,60,40,40,40,Provider 3,Location 3,Non-Binary,Asian

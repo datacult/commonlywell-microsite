@@ -1,11 +1,11 @@
 'use strict'
 
-let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') => {
+let force = ((data, select = 'provider', color = 'rci', selector = '#force') => {
 
     ////////////////////////////////////
     //////////// svg setup /////////////
     ////////////////////////////////////
-    
+
     var body = d3.select(selector)
     body.html("")
 
@@ -40,15 +40,24 @@ let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') 
     //////////////wrangle///////////////
     ////////////////////////////////////
 
+    const metrics = ['rci', 'personal', 'social', 'cultural']
+
     const layouts = [
-        [{x: 0.5, y: 0.5}],
-        [{x: 0.2, y: 0.5}, {x: 0.8, y: 0.5}],
-        [{x: 0.2, y: 0.2}, {x: 0.8, y: 0.2}, {x: 0.5, y: 0.8}],
-        [{x: 0.2, y: 0.2}, {x: 0.8, y: 0.2}, {x: 0.2, y: 0.8}, {x: 0.8, y: 0.8}],
-        [{x: 0.2, y: 0.2}, {x: 0.8, y: 0.2}, {x: 0.2, y: 0.8}, {x: 0.8, y: 0.8}, {x: 0.5, y: 0.5}]
+        [{ x: 0.5, y: 0.5 }],
+        [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
+        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.5, y: 0.8 }],
+        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.2, y: 0.8 }, { x: 0.8, y: 0.8 }],
+        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.2, y: 0.8 }, { x: 0.8, y: 0.8 }, { x: 0.5, y: 0.5 }]
     ]
 
-    const options = ['provider','location','gender','race']
+    const colors = {
+        rci: ['white', 'blue'],
+        personal: ['white', 'red'],
+        social: ['white', 'yellow'],
+        cultural: ['white', 'green']
+    }
+
+    const options = ['provider', 'location', 'gender', 'race']
 
     data.forEach(d => {
         d.coords = {}
@@ -56,49 +65,57 @@ let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') 
 
     let label_coords = []
 
-    for(let option of options){
+    for (let option of options) {
 
         const values = Array.from(new Set(data.map(d => d[option])))
 
         values.forEach(d => {
-            label_coords.push([option, d, layouts[values.length-1][values.indexOf(d)]])
+            label_coords.push([option, d, layouts[values.length - 1][values.indexOf(d)]])
         })
 
         data.forEach(d => {
-            d.coords[option] = layouts[values.length-1][values.indexOf(d[option])]
+            d.coords[option] = layouts[values.length - 1][values.indexOf(d[option])]
         });
 
     }
 
-    console.log(label_coords)
+    const wrangled = metrics.map(d => {
+        return data.map(x => { return { ...x, metric: d } })
+    }).flat()
+
+    console.log(wrangled)
 
     ////////////////////////////////////
     //////////////globals///////////////
     ////////////////////////////////////
 
     const radius = 5
-    
+
     ////////////////////////////////////
     //////////////scales////////////////
     ////////////////////////////////////
 
     const xScale = d3.scaleLinear()
         .range([0, width])
-        .domain([0,1])
-        
+        .domain([0, 1])
+
     const yScale = d3.scaleLinear()
         .range([height, 0])
-        .domain([0,1])
+        .domain([0, 1])
 
-    const colorScale = d3.scaleSequential()
-        .domain([0,100])
-        .interpolator(d3.interpolateViridis)
+    const colorScales = {}
+
+    metrics.forEach(d => {
+        colorScales[d] = d3.scaleLinear()
+            .domain([0, 100])
+            .range(colors[d])
+    })
 
     ////////////////////////////////////
     /////////simulation setup///////////
     ////////////////////////////////////   
 
-    data.forEach(d => {
+    wrangled.forEach(d => {
         d.y = yScale(0.5)
         d.x = xScale(0.5)
     })
@@ -109,34 +126,39 @@ let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') 
             .attr("cy", function (d) { return d.y });
     }
 
-
     let balls = svg.selectAll('.balls')
-        .data(data)
+        .data(wrangled)
         .join('circle')
         .attr('r', radius)
-        .attr('fill', d => colorScale(d[color]))
+        .attr('fill', d => colorScales[d.metric](d[color]))
         .attr('cy', d => yScale(d.coords[select]))
         .attr('cx', d => xScale(d.coords[select]))
         .attr('class', 'balls')
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
 
     let labels = svg.selectAll('.labels')
-        .data(label_coords.filter(d => d[0] == select))
+        .data(label_coords)
         .join('text')
         .text(d => d[1])
         .attr('text-anchor', "middle")
         .attr('y', d => yScale(d[2].y) - 20)
         .attr('x', d => xScale(d[2].x))
+        .attr('opacity', d => d[0] == select ? 1 : 0)
+        .attr('pointer-events', 'none')
         .attr('class', 'labels')
 
 
-    var simulation = d3.forceSimulation(data)
+    var simulation = d3.forceSimulation(wrangled)
         .force('y', d3.forceY(d =>
-                yScale(d.coords[select].y)
-            ).strength(0.5)
+            yScale(d.coords[select].y)
+        ).strength(0.5)
         )
-        .force('x', d3.forceX(d => 
-                xScale(d.coords[select].x)
-            ).strength(0.5)
+        .force('x', d3.forceX(d =>
+            xScale(d.coords[select].x)
+        ).strength(0.5)
         )
         .force('collide', d3.forceCollide(radius * 1.1))
         .alphaDecay(0.01)
@@ -155,13 +177,14 @@ let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') 
         color = val2;
 
         labels
-        .data(label_coords.filter(d => d[0] == select))
-        .join()
-        .text(d => d[1])
-        .attr('y', d => yScale(d[2].y) - 20)
-        .attr('x', d => xScale(d[2].x))
+            .join()
+            .text(d => d[1])
+            .attr('y', d => yScale(d[2].y) - 20)
+            .attr('x', d => xScale(d[2].x))
+            .attr('opacity', d => d[0] == select ? 1 : 0)
 
-        balls.attr('fill', d => colorScale(d[color]))
+
+        balls.attr('fill', d => colorScales[d.metric](d[color]))
 
         simulation.force('x', d3.forceX(function (d) {
             return xScale(d.coords[select].x)
@@ -185,6 +208,21 @@ let force = ((data, select = 'provider', color = 'rci_30', selector = '#force') 
         }, 8000);
 
         return select
+    }
+
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(.03).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(.03);
+        d.fx = null;
+        d.fy = null;
     }
 
     return {

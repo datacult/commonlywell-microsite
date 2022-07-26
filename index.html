@@ -59,11 +59,11 @@
             var force_date = document.getElementById("force_date_select");
 
             force_select.addEventListener("change", function() {
-                force_vis.update(force_select.value, `rci_${force_date.value}`)
+                force_vis.update(force_select.value, `rci`)
             });
 
             force_date.addEventListener("change", function() {
-                force_vis.update(force_select.value, `rci_${force_date.value}`)
+                force_vis.update(force_select.value, `rci`)
             });
         }
         init()
