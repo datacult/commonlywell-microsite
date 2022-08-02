@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
+        <!-- Google fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -30,26 +33,29 @@
         <option value="1">Step 1</option>
         <option value="2">Step 2</option>
         </select>       -->
-        <div id="linechart"></div>
+        <!-- <div id="linechart"></div> -->
+        <div id="comparison"></div>
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <!-- <script src="force.js"></script> -->
-    <script src="linechart.js"></script>
+    <!-- <script src="linechart.js"></script> -->
+    <script src="comparison.js"></script>
     <script>
         async function init(){
-            let data = await d3.csv('../data/line_example.csv', d3.autoType)
+            // let data = await d3.csv('../data/line_example.csv', d3.autoType)
 
-            console.log(data)
+            // console.log(data)
 
-            let mapping = {x:'day', y:'rci', y1:'personal', y2:'social', y3:'cultural', group:'id'}
+            // let mapping = {x:'day', y:'rci', y1:'personal', y2:'social', y3:'cultural', group:'id'}
 
-            let line_vis = linechart(data, mapping)
+            // let line_vis = linechart(data, mapping)
 
-            // var linechart_step_select = document.getElementById("linechart_steps");
 
-            // linechart_step_select.addEventListener("change", function() {
-            //     line_vis.update(linechart_step_select.value)
-            // });
+            let comp_data = await d3.csv('../data/comparison_example.csv', d3.autoType)
+
+            let comp_mapping = {x:'day', y:'rci', group:'id'}
+
+            let comp_vis = comparison(comp_data, comp_mapping)
 
             // let force_data = await d3.csv('../data/force_example.csv', d3.autoType)
 
