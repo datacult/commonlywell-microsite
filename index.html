@@ -23,7 +23,12 @@
         <option value="30">30 Days</option>
         <option value="60">60 Days</option>
         <option value="90">90 Days</option>
-        </select>           
+        </select>
+        <label for="force diagram indicators">Select:</label>
+        <select name="force diagram indicators" id="force_indicators_select">
+        <option value="true">RCI</option>
+        <option value="false">Indicators</option>
+        </select>             
         <div id="force"></div>
         <label for="line chart steps">Line Chart Step:</label>
         <select name="line chart steps" id="linechart_steps">
@@ -57,14 +62,20 @@
 
             var force_select = document.getElementById("force_select");
             var force_date = document.getElementById("force_date_select");
+            var force_indicators = document.getElementById("force_indicators_select");
 
             force_select.addEventListener("change", function() {
-                force_vis.update(force_select.value, `rci`)
+                force_vis.update(force_select.value, force_indicators.value)
             });
 
             force_date.addEventListener("change", function() {
-                force_vis.update(force_select.value, `rci`)
+                force_vis.update(force_select.value, force_indicators.value)
             });
+
+            force_indicators.addEventListener("change", function() {
+                force_vis.update(force_select.value, force_indicators.value)
+            });
+
         }
         init()
 
