@@ -68,8 +68,109 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     const curve = d3.curveCardinal
 
     ////////////////////////////////////
-    //////////data wrangling////////////
+    //////////scroll observers//////////
     ////////////////////////////////////
+    let stp = 1;
+
+    if (window.outerWidth > 900){
+        const activeTreatment = document.querySelector('#active-treatment');
+    
+        const activeTreatmentObserver = new IntersectionObserver((entry, observer) => {
+    
+            if (entry[0].isIntersecting == true) {
+                stp = 1
+                desktopUpdate()
+            }
+        });
+    
+        activeTreatmentObserver.observe(activeTreatment);
+
+        const individualHighlight = document.querySelector('#individual-highlight');
+        
+        const individualHighlightObserver = new IntersectionObserver((entry, observer) => {
+
+            if (entry[0].isIntersecting == true) {
+                stp = 2
+                desktopUpdate()
+            }
+        });
+
+        individualHighlightObserver.observe(individualHighlight);
+
+        const indicatorHighlight = document.querySelector('#indicator-highlight');
+
+        const indicatorHighlightObserver = new IntersectionObserver((entry, observer) => {
+
+            if (entry[0].isIntersecting == true) {
+                stp = 3
+                desktopUpdate()
+            }
+        });
+
+        indicatorHighlightObserver.observe(indicatorHighlight);
+    } else {
+
+        const activeTreatment = document.querySelector('#active-treatment');
+    
+        const activeTreatmentObserver = new IntersectionObserver((entry, observer) => {
+    
+            if (entry[0].isIntersecting == true) {
+                stp = 1
+                mobileUpdate()
+            }
+        });
+    
+        activeTreatmentObserver.observe(activeTreatment);
+
+        const baseRange = document.querySelector('#base-range');
+
+        const baseRangeObserver = new IntersectionObserver((entry, observer) => {
+
+            if (entry[0].isIntersecting == true) {
+                stp = 2
+                mobileUpdate()
+            }
+        });
+
+        baseRangeObserver.observe(baseRange);
+
+        const increaseRange = document.querySelector('#increase-range');
+
+        const increaseRangeObserver = new IntersectionObserver((entry, observer) => {
+
+            if (entry[0].isIntersecting == true) {
+                stp = 3
+                mobileUpdate()
+            }
+        });
+
+        increaseRangeObserver.observe(increaseRange);
+
+        const individualHighlight = document.querySelector('#individual-highlight');
+        
+        const individualHighlightObserver = new IntersectionObserver((entry, observer) => {
+
+            if (entry[0].isIntersecting == true) {
+                stp = 4
+                mobileUpdate()
+            }
+        });
+
+        individualHighlightObserver.observe(individualHighlight);
+
+        const indicatorHighlight = document.querySelector('#indicator-highlight');
+
+        const indicatorHighlightObserver = new IntersectionObserver((entry, observer) => {
+
+            if (entry[0].isIntersecting == true) {
+                stp = 5
+                mobileUpdate()
+            }
+        });
+
+        indicatorHighlightObserver.observe(indicatorHighlight);
+
+    }
 
     ////////////////////////////////////
     //////////////scales////////////////
@@ -95,33 +196,33 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
 
     svg.append('rect')
         .attr('class','annotation')
-        .attr('id','annotation_rect')
+        .attr('id','active_rect')
         .attr('x',0)
         .attr('y',0)
         .attr('height',height)
         .attr('width',xScale(63))
         .attr('fill','#F1F2F3')
-        .attr('display','none');
+        .attr('opacity',0);
 
-    // svg.append('rect')
-    //     .attr('class','annotation')
-    //     .attr('id','base_rect')
-    //     .attr('x',-1*xScale(10))
-    //     .attr('y',yScale(bracket[1]))
-    //     .attr('height',yScale(bracket[0])-yScale(bracket[1]))
-    //     .attr('width',xScale(20))
-    //     .attr('fill','#F1F2F3')
-    //     .attr('display','none');
+    svg.append('rect')
+        .attr('class','mobile_annotation')
+        .attr('id','base_rect')
+        .attr('x',-1*xScale(10))
+        .attr('y',yScale(bracket[1]))
+        .attr('height',yScale(bracket[0])-yScale(bracket[1]))
+        .attr('width',xScale(20))
+        .attr('fill','#F1F2F3')
+        .attr('opacity',0);
     
-    // svg.append('rect')
-    //     .attr('class','annotation')
-    //     .attr('id','increase_rect')
-    //     .attr('x',xScale(80))
-    //     .attr('y',yScale(bracket[1]+increase))
-    //     .attr('height',yScale(bracket[0]+increase)-yScale(bracket[1]+increase))
-    //     .attr('width',xScale(20))
-    //     .attr('fill','#F1F2F3')
-    //     .attr('display','none');
+    svg.append('rect')
+        .attr('class','mobile_annotation')
+        .attr('id','increase_rect')
+        .attr('x',xScale(80))
+        .attr('y',yScale(bracket[1]+increase))
+        .attr('height',yScale(bracket[0]+increase)-yScale(bracket[1]+increase))
+        .attr('width',xScale(20))
+        .attr('fill','#F1F2F3')
+        .attr('opacity',0);
 
     ////////////////////////////////////
     ///////////////axis/////////////////
@@ -137,7 +238,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .call(xAxis.tickSize(-height-10));
 
     svg.select('#x-axis .domain')
-        .attr('stroke','none');
+        .attr('stroke',0);
 
     svg
         .append("line")
@@ -162,7 +263,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .call(yAxis)
 
     svg.select('#y-axis .domain')
-        .attr('stroke','none');
+        .attr('stroke',0);
 
     svg
         .append("line")
@@ -180,16 +281,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     ////////////////////////////////////
 
     if (window.outerWidth > 900){
-    var rect_width = xScale(50), rect_height = 30;
-    svg.select('#annotation_rect').attr('display',1)
-
-    // svg.append('rect')
-    //     .attr('class','annotation')
-    //     .attr('x',xScale(30)-rect_width/2)
-    //     .attr('y',yScale(90)-rect_height/2-4)
-    //     .attr('height',rect_height)
-    //     .attr('width',rect_width)
-    //     .style('fill','#F5F6F7');
+    svg.select('#active_rect').attr('opacity',1)
 
     let treatment = svg.append('text')
         .attr('class','annotation')
@@ -453,106 +545,106 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     svg.selectAll('.annotation_hover').attr('opacity',0);
     } else {
         //mobile annotations
-        var x_annotation = xScale(0), y_annotation = -60, font_size = '4.5vw', line_height = '4.7vw';
+        var x_annotation = xScale(0), y_annotation = -80, font_size = '4.5vw', line_height = '4%';
 
-        // //step 1
-        // var annote = 'ann1';
-        // var ann1 = svg.append('text')
-        //     .attr('class',annote)
-        //     .attr('font-size',font_size)
-        //     .attr('x',x_annotation)
-        //     .attr('y',y_annotation)
+        //step 1
+        var annote1 = svg.append('text')
+            .attr('class','ann')
+            .attr('id','ann1')
+            .attr('font-size',font_size)
+            .attr('x',x_annotation)
+            .attr('y',y_annotation)
+            .attr('opacity',0)
 
-        // ann1
-        //     .append('tspan')
-        //     .attr('x',x_annotation)
-        //     .attr('dy',line_height)
-        //     .text('Most individuals spend')
+        annote1
+            .append('tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text('Most individuals spend')
 
 
-        // ann1
-        //     .append('tspan')
-        //     .attr('x',x_annotation)
-        //     .attr('dy',line_height)
-        //     .text('their first')
-        //     .append('tspan')
-        //     .text(' 9 weeks in')
-        //     .attr('font-weight', 700)
+        annote1
+            .append('tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text('their first')
+            .append('tspan')
+            .text(' 9 weeks in')
+            .attr('font-weight', 700)
 
-        // ann1
-        //     .append('tspan')
-        //     .attr('x',x_annotation)
-        //     .attr('dy',line_height)
-        //     .text('active treatment')
-        //     .attr('font-weight', 700);
+        annote1
+            .append('tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text('active treatment')
+            .attr('font-weight', 700);
 
-        // svg.select('#annotation_rect').attr('display',1)
+        //step 2
+        var annote2 = svg.append('text')
+            .attr('class','ann')
+            .attr('id','ann2')
+            .attr('x',x_annotation)
+            .attr('y',y_annotation)
+            .attr('font-size',font_size)
+            .attr('opacity',0)
 
-        // // //step 2
-        // var annote = 'ann2';
-        // var ann2 = svg.append('text')
-        //     .attr('class',annote)
-        //     .attr('x',x_annotation)
-        //     .attr('y',y_annotation)
-        //     .attr('font-size',font_size)
+        annote2
+            .append('tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text('90% of baseline readings')
+            .attr('font-weight', 700)
 
-        // ann2
-        //     .append('tspan')
-        //     .attr('x',x_annotation)
-        //     .attr('dy',line_height)
-        //     .text('90% of baseline readings')
-        //     .attr('font-weight', 700)
-
-        // ann2
-        //     .append('tspan')
-        //     .attr('x',x_annotation)
-        //     .attr('dy',line_height)
-        //     .text('fall in this range');
-
-        // svg.select('#base_rect').attr('display',1)
+        annote2
+            .append('tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text('fall in this range');
 
         //step 3
-        // var annote = 'ann3', x_annotation_right = xScale(90);
-        // var ann3 = svg.append('text')
-        //     .attr('class',annote)
-        //     .attr('x',x_annotation_right)
-        //     .attr('y',y_annotation)
-        //     .attr('font-size',font_size)
-        //     .attr('text-anchor','end')
+        var x_annotation_right = xScale(90);
+        var annote3 = svg.append('text')
+            .attr('class','ann')
+            .attr('id','ann3')
+            .attr('x',x_annotation_right)
+            .attr('y',y_annotation)
+            .attr('font-size',font_size)
+            .attr('text-anchor','end')
+            .attr('opacity',0)
 
-        // ann3
-        //     .append('tspan')
-        //     .attr('x',x_annotation_right)
-        //     .attr('dy',line_height)
-        //     .text(`On average, an individual's`)
+        annote3
+            .append('tspan')
+            .attr('x',x_annotation_right)
+            .attr('dy',line_height)
+            .text(`On average, an individual's`)
 
-        // ann3
-        //     .append('tspan')
-        //     .attr('x',x_annotation_right)
-        //     .attr('dy',line_height)
-        //     .text('RCI index increases by ')
-        //     .append('tspan')
-        //     .text(increase+'%')
-        //     .attr('font-weight', 700);
-
-        // svg.select('#increase_rect').attr('display',1)
+        annote3
+            .append('tspan')
+            .attr('x',x_annotation_right)
+            .attr('dy',line_height)
+            .text('RCI index increases by ')
+            .append('tspan')
+            .text(increase+'%')
+            .attr('font-weight', 700);
 
         //step 4
-        var annote = 'ann4', x_annotation_middle = xScale(45);
-        var ann4 = svg.append('text')
-            .attr('class',annote)
+        var x_annotation_middle = xScale(45);
+        var annote4 = svg.append('text')
+            .attr('class','ann')
+            .attr('id','ann4')
             .attr('x',x_annotation_middle)
             .attr('y',y_annotation)
             .attr('font-size',font_size)
-            .attr('text-anchor','middle');
+            .attr('text-anchor','middle')
+            .attr('opacity',0);
 
-        ann4
+        annote4
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
             .text(`Each RCI Score is calculated based on`)
 
-        ann4
+        annote4
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
@@ -577,20 +669,22 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .attr('font-weight', 700)
             .attr('fill',indicatorColorScale('cultural'))
 
-        ann4
+        annote4
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
             .text(`scores an individual receives`);
 
-        var y_annotation_bottom = height+50, multiplier = 20;
+        var y_annotation_bottom = height+50;
 
         var ann4b = svg.append('text')
-            .attr('class',annote)
+            .attr('class','ann')
+            .attr('id','ann4b')
             .attr('x',x_annotation_middle)
             .attr('y',y_annotation_bottom)
             .attr('font-size',font_size)
             .attr('text-anchor','middle')
+            .attr('opacity',0)
 
         ann4b
             .append('tspan')
@@ -611,6 +705,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         ann4b
             .append('tspan')
             .attr('x',x_annotation_middle)
+            .attr('dy',line_height)
             .text(`individual and the provider. These`);
 
         ann4b
@@ -649,15 +744,16 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     /////////////// DOM ////////////////
     ////////////////////////////////////F1F2F3
     var sumstat = d3.group(data, d => d[data_map.group]);
+    var line = d3.line()
+        .x(d => xScale(d[data_map.x]))
+        .y(d => yScale(d[data_map.y]))
+        .curve(curve);
 
     [ ...sumstat.keys() ].forEach(id => {
 
     const line_group = svg.append("g").attr('class','line_group').attr('id','line_group'+id)
 
-    const line = d3.line()
-        .x(d => xScale(d[data_map.x]))
-        .y(d => yScale(d[data_map.y]))
-        .curve(curve)  
+    
 
     line_group.append("path")
         .attr("fill", "none")
@@ -677,120 +773,240 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('stroke-width', stroke_width)
         .attr('stroke','#334857')
 
-    if (window.outerWidth > 900){
-    line_group
-        .style('pointer-events','all')
-        .on("mouseover", function() {
-            var hover_lines = '#indicator_group'+id
+    // if (window.outerWidth > 900){
+    // line_group
+    //     .style('pointer-events','all')
+    //     .on("mouseover", function() {
+    //         var hover_lines = '#indicator_group'+id
 
-            // line_group.style('pointer-events','none')
-            svg.select(hover_lines).attr('opacity',1)
-            .transition()
-            .duration(2000);;
-            svg.selectAll('.annotation_hover').attr('opacity',1)
-            .transition()
-            .duration(2000);
-            svg.selectAll('.line_group').attr('opacity',0)
-            .transition()
-            .duration(2000);;
-            svg.selectAll('.annotation').attr('opacity',0)
-            .transition()
-            .duration(2000);
-        })
-        .on("mouseout", function() {
-            var hover_lines = '#indicator_group'+id
+    //         // line_group.style('pointer-events',0)
+    //         svg.select(hover_lines).attr('opacity',1)
+    //         .transition()
+    //         .duration(2000);
+    //         svg.selectAll('.annotation_hover').attr('opacity',1)
+    //         .transition()
+    //         .duration(2000);
+    //         svg.selectAll('.line_group').attr('opacity',0)
+    //         .transition()
+    //         .duration(2000);
+    //         svg.selectAll('.annotation').attr('opacity',0)
+    //         .transition()
+    //         .duration(2000);
+    //     })
+    //     .on("mouseout", function() {
+    //         var hover_lines = '#indicator_group'+id
 
-            svg.select(hover_lines).attr('opacity',0)
-            .transition()
-            .duration(2000);;
-            svg.selectAll('.annotation_hover').attr('opacity',0)
-            .transition()
-            .duration(2000);
-            svg.selectAll('.line_group').attr('opacity',1)
-            .transition()
-            .duration(2000);;
-            svg.selectAll('.annotation').attr('opacity',1)
-            .transition()
-            .duration(2000);
-            // line_group.style('pointer-events','all')
-        }); 
+    //         svg.select(hover_lines).attr('opacity',0)
+    //         .transition()
+    //         .duration(2000);;
+    //         svg.selectAll('.annotation_hover').attr('opacity',0)
+    //         .transition()
+    //         .duration(2000);
+    //         svg.selectAll('.line_group').attr('opacity',1)
+    //         .transition()
+    //         .duration(2000);;
+    //         svg.selectAll('.annotation').attr('opacity',1)
+    //         .transition()
+    //         .duration(2000);
+    //         // line_group.style('pointer-events','all')
+    //     }); 
 
-    var indicators = ['y1','y2','y3']
+    // var indicators = ['y1','y2','y3']
 
-        const indicator_group = svg.append("g")
-            .attr('class','indicator_group')
-            .attr('id','indicator_group'+id)
-            .attr('opacity',0)
+    //     const indicator_group = svg.append("g")
+    //         .attr('class','indicator_group')
+    //         .attr('id','indicator_group'+id)
+    //         .attr('opacity',0)
     
-    indicators.forEach(indicator => {
+    // indicators.forEach(indicator => {
 
-        var line_ind = d3.line()
-            .x(d => xScale(d[data_map.x]))
-            .y(d => yScale(d[data_map[indicator]]))
-            .curve(curve)  
+    //     var line_ind = d3.line()
+    //         .x(d => xScale(d[data_map.x]))
+    //         .y(d => yScale(d[data_map[indicator]]))
+    //         .curve(curve)  
 
-        indicator_group.append("path")
-            .attr("fill", "none")
-            .attr("stroke", indicatorColorScale(data_map[indicator]))
-            .attr("stroke-width", stroke_width)
-            .attr("d", line_ind(sumstat.get(id)));
+    //     indicator_group.append("path")
+    //         .attr("fill", "none")
+    //         .attr("stroke", indicatorColorScale(data_map[indicator]))
+    //         .attr("stroke-width", stroke_width)
+    //         .attr("d", line_ind(sumstat.get(id)));
 
-        indicator_group.append("g")
-            .selectAll("."+data_map[indicator]+"_circle")
-            .data(sumstat.get(id))
-            .join("circle")
-            .attr('class',data_map[indicator]+"_circle")
-            .attr("fill", 'white')
-            .attr('cx', d => xScale(d[data_map.x]))
-            .attr('cy', d => yScale(d[data_map[indicator]]))
-            .attr('r', radius)
-            .attr('stroke-width', stroke_width)
-            .attr("stroke", indicatorColorScale(data_map[indicator]))
+    //     indicator_group.append("g")
+    //         .selectAll("."+data_map[indicator]+"_circle")
+    //         .data(sumstat.get(id))
+    //         .join("circle")
+    //         .attr('class',data_map[indicator]+"_circle")
+    //         .attr("fill", 'white')
+    //         .attr('cx', d => xScale(d[data_map.x]))
+    //         .attr('cy', d => yScale(d[data_map[indicator]]))
+    //         .attr('r', radius)
+    //         .attr('stroke-width', stroke_width)
+    //         .attr("stroke", indicatorColorScale(data_map[indicator]))
 
         
-    })
-    } 
+    // })
+    // } 
     });
 
     //step 4
-    if (window.outerWidth <= 900){
-
+    // if (window.outerWidth <= 900){
+        var highlight_id = 2
         var indicators = ['y1','y2','y3']
 
         const indicator_group = svg.append("g")
             .attr('class','indicator_group')
             .attr('id','indicator_group_mobile')
-            .attr('display','none')
+            .attr('opacity',0)
     
     indicators.forEach(indicator => {
 
-        var line_ind = d3.line()
-            .x(d => xScale(d[data_map.x]))
-            .y(d => yScale(d[data_map[indicator]]))
-            .curve(curve)  
+        // var line_ind = d3.line()
+        //     .x(d => xScale(d[data_map.x]))
+        //     .y(d => yScale(d[data_map[indicator]]))
+        //     .curve(curve)  
 
         indicator_group.append("path")
+            .attr('id','indicator'+data_map[indicator])
             .attr("fill", "none")
             .attr("stroke", indicatorColorScale(data_map[indicator]))
             .attr("stroke-width", stroke_width)
-            .attr("d", line_ind(sumstat.get(1)));
+            .attr("d", line(sumstat.get(highlight_id)));
+            // .attr("d", line_ind(sumstat.get(highlight_id)));
 
         indicator_group.append("g")
+            .attr('id','circ'+data_map[indicator])
             .selectAll("."+data_map[indicator]+"_circle")
-            .data(sumstat.get(1))
+            .data(sumstat.get(highlight_id))
             .join("circle")
             .attr('class',data_map[indicator]+"_circle")
             .attr("fill", 'white')
             .attr('cx', d => xScale(d[data_map.x]))
-            .attr('cy', d => yScale(d[data_map[indicator]]))
+            .attr('cy', d => yScale(d[data_map.y]))
             .attr('r', radius)
             .attr('stroke-width', stroke_width)
             .attr("stroke", indicatorColorScale(data_map[indicator]))
+
+            document.getElementById('line-group').insertBefore(document.getElementById('indicator'+data_map[indicator]), document.getElementById('line_group'+highlight_id));
+            document.getElementById('line-group').insertBefore(document.getElementById('circ'+data_map[indicator]), document.getElementById('line_group'+highlight_id));
     });
 
     
-    svg.selectAll('.indicator_group').attr('display',1);
-    svg.selectAll('.line_group').attr('display','none');
+    
+    // }
+    function desktopUpdate(){
+        if (stp == 1){
+            svg.select('#active_rect').attr('opacity',1);
+            svg.selectAll('.indicator_group').attr('opacity',0);
+            svg.selectAll('.line_group').attr('opacity',1);
+            svg.selectAll('.annotation').attr('opacity',1);
+            svg.selectAll('.annotation_hover').attr('opacity',0);
+        } else if (stp == 2){
+            svg.select('#active_rect').attr('opacity',0);
+            svg.selectAll('.indicator_group').attr('opacity',1);
+            svg.selectAll('.line_group').attr('opacity',0);
+            svg.select('#line_group'+highlight_id).attr('opacity',1);
+            svg.selectAll('.annotation').attr('opacity',0);
+            svg.selectAll('.annotation_hover').attr('opacity',1);
+
+            indicators.forEach(indicator => { 
+        
+                d3.select('#indicator'+data_map[indicator])
+                    .attr("d", line(sumstat.get(highlight_id)));
+
+                d3.selectAll('.'+data_map[indicator]+"_circle")
+                    .attr('cy', d => yScale(d[data_map.y]));
+            });
+        } else {
+            svg.select('#active_rect').attr('opacity',0);
+            svg.selectAll('.indicator_group').attr('opacity',1);
+            svg.selectAll('.line_group').attr('opacity',0);
+            svg.selectAll('.annotation').attr('opacity',0);
+            svg.selectAll('.annotation_hover').attr('opacity',1);
+
+            indicators.forEach(indicator => {
+
+                var line_ind = d3.line()
+                    .x(d => xScale(d[data_map.x]))
+                    .y(d => yScale(d[data_map[indicator]]))
+                    .curve(curve)  
+        
+                d3.select('#indicator'+data_map[indicator])
+                    .attr("d", line_ind(sumstat.get(highlight_id)));
+
+                d3.selectAll('.'+data_map[indicator]+"_circle")
+                    .attr('cy', d => yScale(d[data_map[indicator]]));
+            });
+        }
+    }
+
+    function mobileUpdate(){
+        if (stp == 1){
+            svg.select('#active_rect').attr('opacity',1);
+            svg.selectAll('.indicator_group').attr('opacity',0);
+            svg.selectAll('.line_group').attr('opacity',1);
+            svg.selectAll('.ann').attr('opacity',0);
+            svg.select('#ann1').attr('opacity',1);
+            svg.select('#increase_rect').attr('opacity',0);
+            svg.select('#base_rect').attr('opacity',0);
+        } else if (stp == 2){
+            svg.select('#active_rect').attr('opacity',0);
+            svg.selectAll('.indicator_group').attr('opacity',0);
+            svg.selectAll('.line_group').attr('opacity',1);
+            svg.selectAll('.ann').attr('opacity',0);
+            svg.select('#ann2').attr('opacity',1);
+            svg.select('#increase_rect').attr('opacity',0);
+            svg.select('#base_rect').attr('opacity',1);
+        } else if (stp == 3){
+            svg.select('#active_rect').attr('opacity',0);
+            svg.selectAll('.indicator_group').attr('opacity',0);
+            svg.selectAll('.line_group').attr('opacity',1);
+            svg.selectAll('.ann').attr('opacity',0);
+            svg.select('#ann3').attr('opacity',1);
+            svg.select('#increase_rect').attr('opacity',1);
+            svg.select('#base_rect').attr('opacity',0);
+        } else if (stp = 4){
+            svg.select('#active_rect').attr('opacity',0);
+            svg.selectAll('.indicator_group').attr('opacity',1);
+            svg.selectAll('.line_group').attr('opacity',0);
+            svg.select('#line_group'+highlight_id).attr('opacity',1);
+            svg.selectAll('.ann').attr('opacity',0);
+            svg.select('#ann4').attr('opacity',1);
+            svg.select('#ann4b').attr('opacity',1);
+            svg.select('#increase_rect').attr('opacity',0);
+            svg.select('#base_rect').attr('opacity',0);
+
+            indicators.forEach(indicator => { 
+        
+                d3.select('#indicator'+data_map[indicator])
+                    .attr("d", line(sumstat.get(highlight_id)));
+
+                d3.selectAll('.'+data_map[indicator]+"_circle")
+                    .attr('cy', d => yScale(d[data_map.y]));
+            });
+        } else {
+            svg.select('#active_rect').attr('opacity',0);
+            svg.selectAll('.indicator_group').attr('opacity',1);
+            svg.selectAll('.line_group').attr('opacity',0);
+            svg.selectAll('.ann').attr('opacity',0);
+            svg.select('#ann4').attr('opacity',1);
+            svg.select('#ann4b').attr('opacity',1);
+            svg.select('#increase_rect').attr('opacity',0);
+            svg.select('#base_rect').attr('opacity',0);
+
+            indicators.forEach(indicator => {
+
+                var line_ind = d3.line()
+                    .x(d => xScale(d[data_map.x]))
+                    .y(d => yScale(d[data_map[indicator]]))
+                    .curve(curve)  
+        
+                d3.select('#indicator'+data_map[indicator])
+                    .attr("d", line_ind(sumstat.get(highlight_id)));
+
+                d3.selectAll('.'+data_map[indicator]+"_circle")
+                    .attr('cy', d => yScale(d[data_map[indicator]]));
+            });
+        }
     }
 
 })
