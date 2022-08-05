@@ -2,6 +2,45 @@
 
 let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'y_value', y3:'y_value', group:'step_value'}, selector = '#linechart') => {
 
+    var highlight_id = 104
+    let sample = []
+    data = data.filter(d => d.PROVIDER !== 'Commonly Well');
+
+    data.forEach(i => {
+        var count = [...data].filter(d => d[data_map.group] == i[data_map.group])
+        // console.log(count)
+        var zero = count.filter(d => d[data_map.x] == 0)
+        // console.log(zero)
+        if (count.length > 3 && zero.length < 2){
+            sample.push(i[data_map.group])
+        }
+    })
+
+    // Shuffle array
+    const shuffled = sample.sort(() => 0.5 - Math.random());
+
+    // Get sub-array of first n elements after shuffled
+    let selected = shuffled.slice(0, 13);
+    selected.push(highlight_id)
+    data = data.filter(d => selected.includes(d[data_map.group]));
+
+
+
+    function compare(a, b) {
+        if (a[data_map.x] < b[data_map.x]) {
+          return -1;
+        }
+        if (a[data_map.x] <= b[data_map.x]) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+      }
+
+    data = data.sort(compare);
+
+    // var highlight_id = 104//109
+
     ////////////////////////////////////
     //////////// svg setup /////////////
     ////////////////////////////////////
@@ -23,7 +62,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     var svgWidth = parseInt(d3.select(selector).style('width'), 10)*2
     var svgHeight = (svgWidth / 2)
 
-    var radius = 4
+    var radius = 3.5
     var stroke_width = 2
     } else {
        // margins for SVG
@@ -56,7 +95,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('class', 'linechart-svg')
         .append('g')
         .attr('id','line-group')
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     
     ////////////////////////////////////
@@ -178,7 +217,8 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
 
     const xScale = d3.scaleLinear()
     .range([0, width])
-    .domain(d3.extent(data, d => d[data_map.x]))
+    .domain([0,90])
+    // .domain(d3.extent(data, d => d[data_map.x]))
 
     const yScale = d3.scaleLinear()
         .range([height, 0])
@@ -280,6 +320,16 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     /////////// Annotations ////////////
     ////////////////////////////////////
 
+        svg.append('rect')
+        .attr('class','truncate')
+        .attr('id','trunc_rect')
+        .attr('x',width+15)
+        .attr('y',-31)
+        .attr('height',height+30)
+        .attr('width',300)
+        .attr('fill','white')
+        .attr('opacity',1);
+
     if (window.outerWidth > 900){
     svg.select('#active_rect').attr('opacity',1)
 
@@ -287,7 +337,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('class','annotation')
         .attr('id','treatment_annotation')
         .attr('x',xScale(30))
-        .attr('y',yScale(90))
+        .attr('y',yScale(10))
         .attr('text-anchor','middle')
         .attr('font-size','1vw')
 
@@ -749,9 +799,11 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .y(d => yScale(d[data_map.y]))
         .curve(curve);
 
+    var lines = svg.append('g').attr('id','lines');
+
     [ ...sumstat.keys() ].forEach(id => {
 
-    const line_group = svg.append("g").attr('class','line_group').attr('id','line_group'+id)
+    const line_group = lines.append("g").attr('class','line_group').attr('id','line_group'+id)
 
     
 
@@ -772,85 +824,10 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('r', radius)
         .attr('stroke-width', stroke_width)
         .attr('stroke','#334857')
-
-    // if (window.outerWidth > 900){
-    // line_group
-    //     .style('pointer-events','all')
-    //     .on("mouseover", function() {
-    //         var hover_lines = '#indicator_group'+id
-
-    //         // line_group.style('pointer-events',0)
-    //         svg.select(hover_lines).attr('opacity',1)
-    //         .transition()
-    //         .duration(2000);
-    //         svg.selectAll('.annotation_hover').attr('opacity',1)
-    //         .transition()
-    //         .duration(2000);
-    //         svg.selectAll('.line_group').attr('opacity',0)
-    //         .transition()
-    //         .duration(2000);
-    //         svg.selectAll('.annotation').attr('opacity',0)
-    //         .transition()
-    //         .duration(2000);
-    //     })
-    //     .on("mouseout", function() {
-    //         var hover_lines = '#indicator_group'+id
-
-    //         svg.select(hover_lines).attr('opacity',0)
-    //         .transition()
-    //         .duration(2000);;
-    //         svg.selectAll('.annotation_hover').attr('opacity',0)
-    //         .transition()
-    //         .duration(2000);
-    //         svg.selectAll('.line_group').attr('opacity',1)
-    //         .transition()
-    //         .duration(2000);;
-    //         svg.selectAll('.annotation').attr('opacity',1)
-    //         .transition()
-    //         .duration(2000);
-    //         // line_group.style('pointer-events','all')
-    //     }); 
-
-    // var indicators = ['y1','y2','y3']
-
-    //     const indicator_group = svg.append("g")
-    //         .attr('class','indicator_group')
-    //         .attr('id','indicator_group'+id)
-    //         .attr('opacity',0)
-    
-    // indicators.forEach(indicator => {
-
-    //     var line_ind = d3.line()
-    //         .x(d => xScale(d[data_map.x]))
-    //         .y(d => yScale(d[data_map[indicator]]))
-    //         .curve(curve)  
-
-    //     indicator_group.append("path")
-    //         .attr("fill", "none")
-    //         .attr("stroke", indicatorColorScale(data_map[indicator]))
-    //         .attr("stroke-width", stroke_width)
-    //         .attr("d", line_ind(sumstat.get(id)));
-
-    //     indicator_group.append("g")
-    //         .selectAll("."+data_map[indicator]+"_circle")
-    //         .data(sumstat.get(id))
-    //         .join("circle")
-    //         .attr('class',data_map[indicator]+"_circle")
-    //         .attr("fill", 'white')
-    //         .attr('cx', d => xScale(d[data_map.x]))
-    //         .attr('cy', d => yScale(d[data_map[indicator]]))
-    //         .attr('r', radius)
-    //         .attr('stroke-width', stroke_width)
-    //         .attr("stroke", indicatorColorScale(data_map[indicator]))
-
-        
-    // })
-    // } 
     });
 
     //step 4
     // if (window.outerWidth <= 900){
-        var highlight_id = 2
         var indicators = ['y1','y2','y3']
 
         const indicator_group = svg.append("g")
@@ -859,11 +836,6 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .attr('opacity',0)
     
     indicators.forEach(indicator => {
-
-        // var line_ind = d3.line()
-        //     .x(d => xScale(d[data_map.x]))
-        //     .y(d => yScale(d[data_map[indicator]]))
-        //     .curve(curve)  
 
         indicator_group.append("path")
             .attr('id','indicator'+data_map[indicator])
@@ -886,9 +858,10 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .attr('stroke-width', stroke_width)
             .attr("stroke", indicatorColorScale(data_map[indicator]))
 
-            document.getElementById('line-group').insertBefore(document.getElementById('indicator'+data_map[indicator]), document.getElementById('line_group'+highlight_id));
-            document.getElementById('line-group').insertBefore(document.getElementById('circ'+data_map[indicator]), document.getElementById('line_group'+highlight_id));
     });
+
+    document.getElementById('line-group').insertBefore(document.getElementById('indicator_group_mobile'), document.getElementById('trunc_rect'));
+    document.getElementById('line-group').insertBefore(document.getElementById('lines'), document.getElementById('trunc_rect'));
 
     
     
@@ -984,6 +957,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
                     .attr('cy', d => yScale(d[data_map.y]));
             });
         } else {
+            console.log('test')
             svg.select('#active_rect').attr('opacity',0);
             svg.selectAll('.indicator_group').attr('opacity',1);
             svg.selectAll('.line_group').attr('opacity',0);

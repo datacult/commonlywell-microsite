@@ -51,11 +51,13 @@
     <!-- <script src="comparison.js"></script> -->
     <script>
         async function init(){
-            let data = await d3.csv('../data/line_example.csv', d3.autoType)
+            // let data = await d3.csv('https://datacult.github.io/commonlywell-microsite/data/force_example.csv', d3.autoType)
+
+            let data = await d3.csv('../data/full_sample.csv', d3.autoType)
 
             console.log(data)
 
-            let mapping = {x:'day', y:'rci', y1:'personal', y2:'social', y3:'cultural', group:'id'}
+            let mapping = {x:'DAYS_FROM_FIRST_ASSESSMENT', y:'TOTAL_RCI_SCORE', y1:'PERSONAL_SCORE', y2:'CULTURAL_SCORE', y3:'SOCIAL_SCORE', group:'GENERIC_PARTICIPANT_ID'}
 
             let line_vis = linechart(data, mapping)
 
