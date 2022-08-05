@@ -191,12 +191,13 @@ let force = ((data, selector = '#force') => {
         .attr('class', 'bubbles')
         .on('mouseover', function (d, i) {
             d3.select(this)
-                .raise()
                 .transition()
                 .duration(transition_time / 2)
                 .attr('stroke', d => colorScales[d.metric](d[d.metric]))
                 .attr('fill', 'white')
                 .attr('r', 20)
+
+            d3.select(this.parentNode).raise()
 
             d3.select(this.parentNode)
                 .append('text')
