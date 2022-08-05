@@ -1,6 +1,6 @@
 body{
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(255, 255, 250);
+    background-color: white;
     margin: 0;
 }
 h1{
@@ -43,4 +43,21 @@ rect, path, line {
 }
 .grid line{
     color:lightgrey
+}
+
+#force, #linechart, #comparison {
+    width:50%
+}
+
+#comparison, #linechart {
+    position: sticky;
+    top:0;
+}
+
+#binary, #both, #highlight, #late-highlight {
+    height: 110vh;
+}
+
+#active-treatment, #base-range, #increase-range, #individual-highlight, #indicator-highlight {
+    height: 110vh;
 }
