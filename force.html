@@ -13,43 +13,34 @@
     <body>  
         <label for="force diagram options">Force Select:</label>
         <select name="force diagram options" id="force_select">
-        <option value="provider">provider</option>
-        <option value="location">Location</option>
-        <option value="gender">gender</option>
-        <option value="race">Race</option>
+        <option value="PROVIDER">provider</option>
+        <option value="LOCATION">Location</option>
+        <option value="GENDER">gender</option>
+        <option value="RACE">Race</option>
         </select>
         <label for="force diagram date">Date Select:</label>
         <select name="force diagram date" id="force_date_select">
+        <option value="0">Initial Assessment</option>
         <option value="30">30 Days</option>
         <option value="60">60 Days</option>
         <option value="90">90 Days</option>
-        </select>           
+        </select>
+        <label for="force diagram indicators">Select:</label>
+        <select name="force diagram indicators" id="force_indicators_select">
+        <option value="true">RCI</option>
+        <option value="false">Indicators</option>
+        </select>             
         <div id="force"></div>
         <label for="line chart steps">Line Chart Step:</label>
         <select name="line chart steps" id="linechart_steps">
         <option value="1">Step 1</option>
         <option value="2">Step 2</option>
         </select>      
-        <div id="linechart"></div>
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="force.js"></script>
-    <script src="linechart.js"></script>
     <script>
         async function init(){
-            let data = await d3.csv('../data/example.csv', d3.autoType)
-
-            console.log(data)
-
-            let mapping = {x:'x_value', y:'y_value', color:'color_value', step:'step_value'}
-
-            let line_vis = linechart(data, mapping)
-
-            var linechart_step_select = document.getElementById("linechart_steps");
-
-            linechart_step_select.addEventListener("change", function() {
-                line_vis.update(linechart_step_select.value)
-            });
 
             let force_data = await d3.csv('../data/force_example.csv', d3.autoType)
 
@@ -57,14 +48,20 @@
 
             var force_select = document.getElementById("force_select");
             var force_date = document.getElementById("force_date_select");
+            var force_indicators = document.getElementById("force_indicators_select");
 
             force_select.addEventListener("change", function() {
-                force_vis.update(force_select.value, `rci`)
+                force_vis.update(force_select.value, force_indicators.value, force_date.value)
             });
 
             force_date.addEventListener("change", function() {
-                force_vis.update(force_select.value, `rci`)
+                force_vis.update(force_select.value, force_indicators.value, force_date.value)
             });
+
+            force_indicators.addEventListener("change", function() {
+                force_vis.update(force_select.value, force_indicators.value, force_date.value)
+            });
+
         }
         init()
 
