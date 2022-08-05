@@ -42,7 +42,7 @@
     <script>
         async function init(){
 
-            let force_data = await d3.csv('../data/force_example.csv', d3.autoType)
+            let force_data = await d3.csv('https://datacult.github.io/commonlywell-microsite/data/force_example.csv', d3.autoType)
 
             let force_vis = force(force_data)
 
