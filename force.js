@@ -155,8 +155,6 @@ let force = ((data, selector = '#force') => {
 
         const values = Array.from(new Set(data.map(d => d[option])))
 
-        console.log(option, values)
-
         values.forEach(d => {
             label_coords.push([option, d, layouts[values.length - 1][values.indexOf(d)]])
         })
