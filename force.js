@@ -166,10 +166,11 @@ let force = ((data, selector = '#force') => {
     }
 
 
-    const wrangled = metrics.map(d => {
-        return filtered.map(x => { return { ...x, metric: d, radius: d == 'TOTAL_RCI_SCORE' ? use_size ? sizeScale(x[d]) * radius : radius : 1e-6 } })
+    let wrangled = metrics.map(d => {
+        return filtered.map(x => { 
+            return { ...x, metric: d, radius: d == 'TOTAL_RCI_SCORE' ? use_size ? sizeScale(x[d]) * radius : radius : 1e-6 } 
+        })
     }).flat()
-
 
 
     console.log(wrangled)
@@ -190,12 +191,20 @@ let force = ((data, selector = '#force') => {
         .attr('stroke-width', 2)
         .attr('class', 'bubbles')
         .on('mouseover', function (d, i) {
+
+            wrangled.forEach(x => {
+                if (x == wrangled[bubbles.nodes().indexOf(this)]){
+                    x.OLD = {radius : x.radius}
+                    x.radius = 20
+                }
+            })
+
             d3.select(this)
                 .transition()
                 .duration(transition_time / 2)
                 .attr('stroke', d => colorScales[d.metric](d[d.metric]))
                 .attr('fill', 'white')
-                .attr('r', 20)
+                .attr('r', d => d.radius)
 
             d3.select(this.parentNode).raise()
 
@@ -213,10 +222,17 @@ let force = ((data, selector = '#force') => {
                 .duration(transition_time / 2)
                 .attr('opacity', 1)
 
-            simulation.restart()
+            simulation.alpha(0.01).restart()
 
         })
         .on('mouseout', function (d, i) {
+
+            wrangled.forEach(x => {
+                if (x == wrangled[bubbles.nodes().indexOf(this)]){
+                    x.radius = x.OLD.radius
+                }
+            })
+
             d3.select(this).transition()
                 .duration(transition_time / 2)
                 .attr('fill', d => colorScales[d.metric](d[d.metric]))
@@ -234,14 +250,16 @@ let force = ((data, selector = '#force') => {
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
-
-    bubbles.transition()
-        .duration(500)
-        .delay(function (d, i) { return i * 2; })
-        .attrTween("r", function (d) {
-            var i = d3.interpolate(0, d.radius);
-            return function (t) { return d.radius = i(t); };
-        });
+    
+        setTimeout(() => {
+            bubbles.transition()
+            .duration(transition_time)
+            .delay(function (d, i) { return i * 10; })
+            .attrTween("r", function (d) {
+                var i = d3.interpolate(0, d.radius);
+                return function (t) { return d.radius = i(t); };
+            });
+        }, 500)
 
     let labels = svg.selectAll('.labels')
         .data(label_coords)
@@ -332,8 +350,6 @@ let force = ((data, selector = '#force') => {
             .force("collide", forceCollide())
             .force("cluster", forceCluster())
             .alpha(simulation_alpha)
-            // .alphaMin(simulation_alpha_min)
-            // .velocityDecay(simulation_velocity_decay)
             .on('tick', tick)
 
     }
@@ -342,7 +358,6 @@ let force = ((data, selector = '#force') => {
         bubble_groups
             .attr("transform", function (d) { return `translate(${d.x},${d.y})` })
     }
-
 
     function dragstarted(event) {
         if (!event.active) simulation.alphaTarget(simulation_alpha).restart();
@@ -365,11 +380,11 @@ let force = ((data, selector = '#force') => {
         let nodes;
 
         function force(alpha) {
-            const centroids = d3.rollup(nodes, centroid, d => d[cluster]);
+            const centroids = d3.rollup(nodes, centroid, d => `${d[cluster]}-${d[select]}`);
 
             let l = alpha * cluster_strength;
             for (const d of nodes) {
-                const { x: cx, y: cy } = centroids.get(d[cluster]);
+                const { x: cx, y: cy } = centroids.get(`${d[cluster]}-${d[select]}`);
                 d.vx -= (d.x - cx) * l;
                 d.vy -= (d.y - cy) * l;
             }
@@ -393,17 +408,21 @@ let force = ((data, selector = '#force') => {
         return { x: x / z, y: y / z };
     }
 
-
     function forceCollide() {
         let nodes;
         let maxRadius;
 
         function force() {
             const quadtree = d3.quadtree(nodes, d => d.x, d => d.y);
+
             for (const d of nodes) {
                 const r = d.radius + maxRadius;
-                const nx1 = d.x - r, ny1 = d.y - r;
-                const nx2 = d.x + r, ny2 = d.y + r;
+
+                const nx1 = d.x - r 
+                const ny1 = d.y - r
+                const nx2 = d.x + r
+                const ny2 = d.y + r;
+
                 quadtree.visit((q, x1, y1, x2, y2) => {
                     if (!q.length) do {
                         if (q.data !== d) {
@@ -411,6 +430,7 @@ let force = ((data, selector = '#force') => {
                             let x = d.x - q.data.x
                             let y = d.y - q.data.y
                             let l = Math.hypot(x, y)
+
                             if (l < r) {
                                 l = (l - r) / l * collide_alpha;
                                 d.x -= x *= l, d.y -= y *= l;
@@ -483,22 +503,23 @@ let force = ((data, selector = '#force') => {
 
             if (rci_select == "true") {
                 cluster = 'GENERIC_PARTICIPANT_ID'
-                rci = rci_select
+                // rci = rci_select
                 update()
                 create_legend()
-                // setTimeout(() => {
-                //     rci = rci_select
-                //     update()
-                // }, 1500)
+                setTimeout(() => {
+                    rci = rci_select
+                    update()
+                    create_legend()
+                }, 2000)
             } else {
                 cluster = 'GENERIC_PARTICIPANT_ID'
                 rci = rci_select
                 update()
                 create_legend()
-                // setTimeout(() => {
-                //     cluster = 'metric'
-                //     update()
-                // }, 1500)
+                setTimeout(() => {
+                    cluster = 'metric'
+                    update()
+                }, 2000)
             }
 
         } else {
@@ -515,15 +536,12 @@ let force = ((data, selector = '#force') => {
         wrangled.forEach(d => d.radius = d.metric == 'TOTAL_RCI_SCORE' ? use_size ? sizeScale(d[d.metric]) * rci_radius : rci_radius : use_size ? sizeScale(d[d.metric]) * other_radius : other_radius)
 
         bubbles
-            .filter(d => d.OLD[d.metric] != d[d.metric])
-            .attr('stroke', d => colorScales[d.metric](d[d.metric]))
             .transition()
-            .duration(transition_time / 2)
-            .attr("r", d => d.radius)
-            .attr('stroke', 'none')
+            .duration(transition_time)
+            .delay(function (d, i) { return i * 10; })
+            .attr("r", d => d.radius);
 
-        simulation.restart()
-
+        simulation.alpha(0.01).restart()
 
     }
 
