@@ -52,10 +52,10 @@ let force = ((data, selector = '#force') => {
 
     const labels_offset = -100
     const radius = 20
-    const metric_strength = 0.5
+    const metric_strength = 0.3
     const cluster_strength = 1
 
-    const simulation_alpha = 0.2
+    const simulation_alpha = 0.5
     const simulation_velocity_decay = 0.5
     const simulation_alpha_min = 0.1
 
@@ -347,6 +347,7 @@ let force = ((data, selector = '#force') => {
         simulation = d3.forceSimulation(wrangled)
             .force('y', d3.forceY(d => yScale(d.coords[select].y)).strength(metric_strength))
             .force('x', d3.forceX(d => xScale(d.coords[select].x)).strength(metric_strength))
+            .force("charge", d3.forceManyBody().strength(rci == 'true' ? 0 : -20))
             .force("collide", forceCollide())
             .force("cluster", forceCluster())
             .alpha(simulation_alpha)
