@@ -20,7 +20,7 @@ let force = ((data, selector = '#force') => {
         left: 100,
         right: 100,
         top: 100,
-        bottom: 100
+        bottom: 200
     }
 
     // responsive width & height
@@ -300,7 +300,7 @@ let force = ((data, selector = '#force') => {
             let legend = legend_options[rci == 'true' ? 'TOTAL_RCI_SCORE' : 'INDICATORS'][index]
 
             const legend_group = legend_container_group.append("g")
-                .attr("transform", `translate(${legend_width * index},${height + (legend_height * 2)})`)
+                .attr("transform", `translate(${legend_width * index},${height + margin.bottom - (legend_height * 2)})`)
                 .attr("id", "legend-x-axis")
 
             const legend_data = new Array(Math.floor(legend_width)).fill(1)
