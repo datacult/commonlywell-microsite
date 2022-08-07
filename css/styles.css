@@ -45,7 +45,7 @@ rect, path, line {
     color:lightgrey
 }
 
-#force, #linechart, #comparison {
+#linechart, #comparison {
     width:50%
 }
 
