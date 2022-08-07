@@ -24,7 +24,7 @@ let force = ((data, selector = '#force') => {
     }
 
     // responsive width & height
-    const svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    const svgWidth = 1800 // parseInt(d3.select(selector).style('width'), 10)
     const svgHeight = svgWidth / 2
 
     // helper calculated variables for inner width & height
@@ -36,9 +36,11 @@ let force = ((data, selector = '#force') => {
     d3.select(`${selector} svg`).remove();
 
     const svg = d3.select(selector)
+        // .append('svg')
+        // .attr('height', svgHeight)
+        // .attr('width', svgWidth)
         .append('svg')
-        .attr('height', svgHeight)
-        .attr('width', svgWidth)
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
@@ -50,7 +52,7 @@ let force = ((data, selector = '#force') => {
 
     const transition_time = 750
 
-    const labels_offset = -100
+    const labels_offset = -150
     const radius = 20
     const metric_strength = 0.3
     const cluster_strength = 1
