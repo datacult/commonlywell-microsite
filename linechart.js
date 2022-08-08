@@ -74,7 +74,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     } 
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)*2
+    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
     var svgHeight = (svgWidth*1.4)
 
     var radius = 2
