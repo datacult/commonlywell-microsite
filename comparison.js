@@ -3,6 +3,22 @@
 let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value'}, selector = '#comparison', recover = 'XX',peak = 20) => {
 
     let step = 1;
+    var dip_ids = [104,123]
+    data = data.filter(d => dip_ids.includes(d[data_map.group]));
+
+    function compare(a, b) {
+        if (a[data_map.x] < b[data_map.x]) {
+          return -1;
+        }
+        if (a[data_map.x] <= b[data_map.x]) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+      }
+
+    data = data.sort(compare);
+
     ////////////////////////////////////
     //////////// svg setup /////////////
     ////////////////////////////////////    
@@ -567,11 +583,11 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     //draw highlights
     var dipstat = d3.group(data, d => d[data_map.group]);
-    var dip_ids = [1,2]
+    console.log(dipstat)
 
     dip_ids.forEach((dip_id) => {
         var area = [...dipstat.get(dip_id)];
-        if (dip_id == 1){
+        if (dip_id == dip_ids[0]){
             area.pop();
         } else {
             area.shift()
@@ -613,24 +629,24 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr("fill","#F1F2F2")
             .attr("d", dip_area(dipstat.get(dip_id)));
 
-        document.getElementById('comparison-group').insertBefore(document.getElementById('dip_fill_group'+dip_id), document.getElementById('x-line'));
+        document.getElementById('comparison-group').insertBefore(document.getElementById('dip_fill_group'+dip_id), document.getElementById('x-axis'));
         
-        dipstat.forEach(d => {
-            dip_fill_group
-            .append('g')
-            .selectAll('.tick-line')
-            .data(dipstat.get(dip_id))
-            .join("line")
-            .attr('class','tick-line')
-            .attr('id','tick-line'+dip_id)
-            .style('opacity',0)
-            .attr('y1',d => yScale(d[data_map.y])+radius)
-            .attr('y2',height)
-            .attr('x1',d => xScale(d[data_map.x]))
-            .attr('x2',d => xScale(d[data_map.x]))
-            .attr('stroke','#2A353C')
-            .style("stroke-dasharray", ("1.5, 1.5"));
-        })
+        // dipstat.forEach(d => {
+        //     dip_fill_group
+        //     .append('g')
+        //     .selectAll('.tick-line')
+        //     .data(dipstat.get(dip_id))
+        //     .join("line")
+        //     .attr('class','tick-line')
+        //     .attr('id','tick-line'+dip_id)
+        //     .style('opacity',0)
+        //     .attr('y1',d => yScale(d[data_map.y])+radius)
+        //     .attr('y2',height)
+        //     .attr('x1',d => xScale(d[data_map.x]))
+        //     .attr('x2',d => xScale(d[data_map.x]))
+        //     .attr('stroke','#2A353C')
+        //     .style("stroke-dasharray", ("1.5, 1.5"));
+        // })
 
         dip_group.append("path")
             // .attr('class','line')
@@ -757,9 +773,9 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('.circle').style('opacity',0)
             .transition()
             .duration(2000);
-            svg.selectAll('.tick-line').style('opacity',0)
-            .transition()
-            .duration(2000);
+            // svg.selectAll('.tick-line').style('opacity',0)
+            // .transition()
+            // .duration(2000);
 
             svg.select('#binary-comparison').style('opacity',.5)
             .transition()
@@ -804,9 +820,9 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',1)
             .transition()
             .duration(2000);
-            svg.selectAll('#tick-line'+dip_ids[0]).style('opacity',1)
-            .transition()
-            .duration(10000);
+            // svg.selectAll('#tick-line'+dip_ids[0]).style('opacity',1)
+            // .transition()
+            // .duration(10000);
             svg.selectAll('#line_group'+dip_ids[1]).style('opacity',0)
             .transition()
             .duration(2000);
@@ -816,7 +832,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[1]).style('opacity',0)
             .transition()
             .duration(2000);
-            svg.selectAll('#tick-line'+dip_ids[1]).style('opacity',0)
+            // svg.selectAll('#tick-line'+dip_ids[1]).style('opacity',0)
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)
@@ -852,9 +868,9 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
             .transition()
             .duration(2000);
-            svg.selectAll('#tick-line'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
-            .transition()
-            .duration(10000);
+            // svg.selectAll('#tick-line'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
+            // .transition()
+            // .duration(10000);
             svg.selectAll('#line_group'+dip_ids[0]).style('opacity',0)
             .transition()
             .duration(2000);
@@ -864,7 +880,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',0)
             .transition()
             .duration(2000);
-            svg.selectAll('#tick-line'+dip_ids[0]).style('opacity',0)
+            // svg.selectAll('#tick-line'+dip_ids[0]).style('opacity',0)
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)

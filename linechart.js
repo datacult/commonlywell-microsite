@@ -232,7 +232,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     ////////////////////////////////////
     /////////// Annotations ////////////
     ////////////////////////////////////
-    var bracket = [55,80], increase = 15;
+    var bracket = [52,75], increase = 6;
 
     svg.append('rect')
         .attr('class','annotation')
@@ -452,7 +452,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     base_annotation.append('tspan')
         .attr('x',ba_x)
         .attr('dy',line_height)
-        .text('90% of baseline')
+        .text('50% of baseline')
         .attr('font-weight', 700);
 
     base_annotation.append('tspan')
@@ -490,13 +490,20 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     increase_annotation.append('tspan')
         .attr('x',ia_x)
         .attr('dy',line_height)
-        .text('index increases');
+        .text('increases ')
+        .append('tspan')
+        .text('by '+increase+' points')
+        .attr('font-weight', 700);
 
     increase_annotation.append('tspan')
         .attr('x',ia_x)
         .attr('dy',line_height)
-        .text('by '+increase+'%')
-        .attr('font-weight', 700);
+        .text('after their first');
+
+    increase_annotation.append('tspan')
+        .attr('x',ia_x)
+        .attr('dy',line_height)
+        .text('four assessments');
 
     var la_x = xScale(7), la_center = 95;
 
