@@ -168,7 +168,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
         g
         .attr("class", 'axis')
-        .attr("id", "x-axis")
+        .attr("id", "x-axis-comparison")
         .attr("transform", `translate(0,${height+10})`)
         .transition().duration(2000)
         .call(xAxis.tickSize(-height-10));
@@ -646,7 +646,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
                     .attr("fill", "white")
                     .attr("d", dip_fill(area));
                     
-                document.getElementById('comparison-group').insertBefore(document.getElementById('dip_fill_group'+dip_id), document.getElementById('x-axis'));
+                document.getElementById('comparison-group').insertBefore(document.getElementById('dip_fill_group'+dip_id), document.getElementById('x-axis-comparison'));
         
 
         }
