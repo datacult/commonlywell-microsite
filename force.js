@@ -110,7 +110,7 @@ let force = ((data, selector = '#force') => {
 
     const labelOffsetScale = d3.scaleSymlog()
         .domain([1, 30])
-        .range([0, 100])
+        .range([10, 100])
 
     const colorScales = {}
 
@@ -179,7 +179,6 @@ let force = ((data, selector = '#force') => {
     }).flat()
 
     console.log(label_coords)
-
     console.log(wrangled)
 
     ////////////////////////////////////
@@ -518,7 +517,7 @@ let force = ((data, selector = '#force') => {
                     rci = rci_select
                     update()
                     create_legend()
-                }, 2000)
+                }, 1000)
             } else {
                 cluster = 'GENERIC_PARTICIPANT_ID'
                 rci = rci_select
@@ -527,7 +526,7 @@ let force = ((data, selector = '#force') => {
                 setTimeout(() => {
                     cluster = 'metric'
                     update()
-                }, 2000)
+                }, 1000)
             }
 
         } else {
