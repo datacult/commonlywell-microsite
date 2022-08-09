@@ -178,7 +178,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
 
 
-    svg.selectAll("#x-axis line")
+    svg.selectAll("#x-axis-comparison line")
     .attr('stroke','#2A353C')
     .style("stroke-dasharray", ("1.5, 1.5"));
 
@@ -198,7 +198,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('x2',width+20)
         .attr('stroke','#2A353C');
 
-    svg.selectAll("#x-axis line")
+    svg.selectAll("#x-axis-comparison line")
         .attr('stroke','#2A353C')
         .style("stroke-dasharray", ("1.5, 1.5"));
 
