@@ -24,7 +24,7 @@ let force = ((data, selector = '#force') => {
     }
 
     // responsive width & height
-    const svgWidth = 1800 // parseInt(d3.select(selector).style('width'), 10)
+    const svgWidth = 1600 // parseInt(d3.select(selector).style('width'), 10)
     const svgHeight = svgWidth / 2
 
     // helper calculated variables for inner width & height
@@ -52,7 +52,7 @@ let force = ((data, selector = '#force') => {
 
     const transition_time = 750
 
-    const labels_offset = -150
+    const labels_offset = -100
     const radius = 20
     const metric_strength = 0.3
     const cluster_strength = 1
@@ -71,11 +71,11 @@ let force = ((data, selector = '#force') => {
 
     const layouts = [
         [{ x: 0.5, y: 0.5 }],
-        [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
-        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.5, y: 0.8 }],
-        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.2, y: 0.8 }, { x: 0.8, y: 0.8 }],
-        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.2, y: 0.8 }, { x: 0.8, y: 0.8 }, { x: 0.5, y: 0.5 }],
-        [{ x: 0.2, y: 0.2 }, { x: 0.8, y: 0.2 }, { x: 0.2, y: 0.8 }, { x: 0.8, y: 0.8 }, { x: 0.5, y: 0.2 }, { x: 0.5, y: 0.8 }]
+        [{ x: 0.1, y: 0.5 }, { x: 0.9, y: 0.5 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.5, y: 0.9 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
     ]
 
     const colors = {
@@ -107,6 +107,10 @@ let force = ((data, selector = '#force') => {
     const sizeScale = d3.scaleLinear()
         .domain([0, 100])
         .range([0, 1])
+
+    const labelOffsetScale = d3.scaleSymlog()
+        .domain([1, 30])
+        .range([10, 100])
 
     const colorScales = {}
 
@@ -174,7 +178,7 @@ let force = ((data, selector = '#force') => {
         })
     }).flat()
 
-
+    console.log(label_coords)
     console.log(wrangled)
 
     ////////////////////////////////////
@@ -268,7 +272,7 @@ let force = ((data, selector = '#force') => {
         .join('text')
         .text(d => d[1])
         .attr('text-anchor', "middle")
-        .attr('y', d => yScale(d[2].y) + labels_offset)
+        .attr('y', d => yScale(d[2].y) - labelOffsetScale(wrangled.filter(x => x[d[0]] == d[1]).length))
         .attr('x', d => xScale(d[2].x))
         .attr('opacity', d => d[0] == select ? 1 : 0)
         .attr('pointer-events', 'none')
@@ -513,7 +517,7 @@ let force = ((data, selector = '#force') => {
                     rci = rci_select
                     update()
                     create_legend()
-                }, 2000)
+                }, 1000)
             } else {
                 cluster = 'GENERIC_PARTICIPANT_ID'
                 rci = rci_select
@@ -522,7 +526,7 @@ let force = ((data, selector = '#force') => {
                 setTimeout(() => {
                     cluster = 'metric'
                     update()
-                }, 2000)
+                }, 1000)
             }
 
         } else {
