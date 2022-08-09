@@ -3,7 +3,7 @@
 let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value'}, selector = '#comparison', recover = 'XX',peak = 20) => {
 
     let step = 1;
-    var dip_ids = [104,123]
+    var dip_ids = [1780,172]
     data = data.filter(d => dip_ids.includes(d[data_map.group]));
 
     function compare(a, b) {
@@ -140,10 +140,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     ////////////////////////////////////
     const xScale = d3.scaleLinear();  
 
-    // const xScale = d3.scaleLinear()
-    // .range([0, width])
-    // .domain(d3.extent(data, d => d[data_map.x]))
-
     const yScale = d3.scaleLinear()
         .range([height, 0])
         .domain([0,100])
@@ -160,8 +156,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     tickLabels = ['Baseline','30-day','60-day','90-day'], tickVal = [0,30,60,90];
 
     draw(tickVal,tickLabels);
-
-    // tickLabels = ['120-day','150-day','180-day','210-day'], tickVal = [120,150,180,210];
 
     function draw(ticks,labels){
 
@@ -191,8 +185,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     svg.selectAll('.axis').style('font-family','Montserrat')
     } 
-
-    // const xAxis = d3.axisBottom(xScale).ticks(3).tickValues([0,30,60,90]).tickFormat((d,i) => tickLabels[i])
 
     svg.select('.domain')
     .attr('stroke','none');
@@ -240,7 +232,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     if (window.outerWidth > 900){
 
-    // var annotation, da_x, da_center;
     var line_height = '2%';
     var annotation;
     var da_x = 0, da_center = 0;
@@ -256,23 +247,27 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
         txt1
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .text('Traditionally, measuring')
 
         txt1
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text('recovery as binary has meant')
 
         txt1
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`that a setback causes a reset to`)
 
         txt1
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`an individual's progress.`);
@@ -288,81 +283,96 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .text('Unlike binary tracking, the RCI')
 
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text('offers a more supportive, holistic')
 
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`view of setbacks.`)
 
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(` `)
 
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`Here, a setback isn't the whole`)
         
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`picture, and doesn't necessarily`)
         
         txt2
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`result in a decline in score.`);
 
     //step 3
-    let txt3 = svg.append('text')
+    var txt3 = svg.append('text')
         .attr('id','annotation3')
-        .attr('alignment-baseline','middle')
         .attr('x',da_x)
         .attr('y',yScale(da_center))
         .attr('font-size','1vw')
-        .style('opacity',0)
+        .style('opacity',0);
 
         txt3
         .append('tspan')
-        .attr('x',da_x)
-        .text('Individuals experiencing a low on')
-
-        txt3
-        .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text('an assessment see their score')
-
-        txt3
-        .append('tspan')
-        .attr('x',da_x)
-        .attr('dy',line_height)
-        .text(`recover to ${recover}% it's original value`)
+        .text(recover+'% of individuals ')
         .attr('font-weight',700)
+        .append('tspan')
+        .text(`experiencing`)
+        .attr('font-weight',300);
 
         txt3
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text(`by their next evaluation.`);
+        .text('a low on an assessment see');
+
+        txt3
+        .append('tspan')
+        .attr('class','tspan')
+        .attr('x',da_x)
+        .attr('dy',line_height)
+        .text('their score')
+        .append('tspan')
+        .text(' trend upward')
+        .attr('font-weight',700);
+
+        txt3
+        .append('tspan')
+        .attr('class','tspan')
+        .attr('x',da_x)
+        .attr('dy',line_height)
+        .text(`within two evaluations.`);
 
     //step 4
-    // var da_x = xScale(182), da_center = 25, line_height = '2%';
-
     let txt = svg.append('text')
         .attr('id','annotation4')
         .attr('alignment-baseline','middle')
@@ -373,32 +383,36 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
         txt
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
-        .text('Lows experienced further')
+        .text('On average, assessments taken')
 
         txt
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text('along in the process are')
+        .text('during the 120 to 210 day')
 
         txt
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text(`less of an interruption and`)
+        .text(`range are `)
+        .append('tspan')
+        .text(`higher`)
+        .attr('font-weight',700)
+        .append('tspan')
+        .text(` than those`)
+        .attr('font-weight',300)
 
         txt
         .append('tspan')
+        .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text(`are reflected in a smaller`)
-
-        txt
-        .append('tspan')
-        .attr('x',da_x)
-        .attr('dy',line_height)
-        .text(`decline in RCI score`);
+        .text(`taken in the first 90 days.`)
         
     var bg_rect = svg.append('rect')
         .attr('id','annotation_rect')
@@ -420,6 +434,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
         ann1
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text('Traditionally, measuring recovery')
@@ -427,18 +442,21 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
         ann1
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text('as binary has meant that a')
 
         ann1
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text('setback causes a reset to an');
 
         ann1
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`individual's progress`);
@@ -454,35 +472,41 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
             ann2
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .text('Unlike binary tracking, the RCI')
 
             ann2
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text('offers a more supportive, holistic')
 
             ann2
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`view of setbacks.`)
 
             ann2
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`Here, a setback isn't the whole`)
             
             ann2
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`picture, and doesn't necessarily`)
             
             ann2
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`result in a decline in score.`);
@@ -490,7 +514,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         svg.select('#base_rect').style('opacity',1)
 
         //step 3
-
         let ann3 = svg.append('text')
             .attr('id','annotation3')
             .attr('alignment-baseline','middle')
@@ -501,27 +524,37 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
             ann3
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
-            .text('Individuals experiencing a low on')
-
-            ann3
-            .append('tspan')
-            .attr('x',x_annotation)
-            .attr('dy',line_height)
-            .text('an assessment see their score')
-
-            ann3
-            .append('tspan')
-            .attr('x',x_annotation)
-            .attr('dy',line_height)
-            .text(`recover to ${recover}% it's original value`)
+            .text(recover+'% of individuals ')
             .attr('font-weight',700)
+            .append('tspan')
+            .text(`experiencing`)
+            .attr('font-weight',300);
 
             ann3
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text(`by their next evaluation.`);
+            .text('a low on an assessment see')
+
+            ann3
+            .append('tspan')
+            .attr('class','tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text('their score')
+            .append('tspan')
+            .text(' trend upward')
+            .attr('font-weight',700);
+
+            ann3
+            .append('tspan')
+            .attr('class','tspan')
+            .attr('x',x_annotation)
+            .attr('dy',line_height)
+            .text(`within two evaluations.`);
 
         //step 4
         let ann4 = svg.append('text')
@@ -534,40 +567,41 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
             ann4
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
-            .text('Lows experienced further along in')
+            .text('On average, assessments taken')
 
             ann4
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text('the process are less of an')
+            .text('during the 120 to 210 day')
 
             ann4
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text(`interruption and are reflected in a`)
+            .text(`range are `)
+            .append('tspan')
+            .text(`higher`)
+            .attr('font-weight',700)
+            .append('tspan')
+            .text(` than those`)
+            .attr('font-weight',300)
 
             ann4
             .append('tspan')
+            .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text(`smaller decline in RCI score`)
-
-    // var bg_size = document.getElementById(annote).getBBox(), padding = 10;
-        
+            .text(`taken in the first 90 days.`)
+    
     var bg_rect = svg.append('rect')
         .attr('id','annotation_rect')
-        // .attr('x',bg_size.x-padding)
-        // .attr('y',bg_size.y-padding)
-        // .attr('height',bg_size.height+padding*2)
-        // .attr('width',bg_size.width+padding*2)
         .style('fill','white')
         .style('opacity',.5);
-
-    // document.getElementById('comparison-group').insertBefore(document.getElementById('annotation_rect'), document.getElementById(annote));
-
             
     }
 
@@ -587,91 +621,68 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     dip_ids.forEach((dip_id) => {
         var area = [...dipstat.get(dip_id)];
-        if (dip_id == dip_ids[0]){
-            area.pop();
-        } else {
-            area.shift()
+        if (dip_id == dip_ids[1]){
+            area.shift();
+            area.shift();
+            area.shift();
+            area[0][data_map.x] = 120;
+            area[0][data_map.y] = 60;
         }
 
         const dip_group = svg.append("g").attr('id','dip_group'+dip_id)
 
-        const dip_fill_group = svg.append("g").attr('id','dip_fill_group'+dip_id)
+        if (dip_id != 172){
+            const dip_fill_group = svg.append("g").attr('id','dip_fill_group'+dip_id)
+            
+                const dip_fill = d3.line()
+                    .x(d => xScale(d[data_map.x]))
+                    .y(d => yScale(d[data_map.y]))
+                    .curve(curve) 
+        
+                    dip_fill_group.append("path")
+                    .attr('class','line_fill')
+                    .attr('id','line_fill'+dip_id)
+                    .style('opacity',0)
+                    // .attr("id", "dip_fill")
+                    .attr("fill", "white")
+                    .attr("d", dip_fill(area));
+                    
+                document.getElementById('comparison-group').insertBefore(document.getElementById('dip_fill_group'+dip_id), document.getElementById('x-axis'));
+        
+
+        }
 
         const dip = d3.line()
             .x(d => xScale(d[data_map.x]))
             .y(d => yScale(d[data_map.y]))
             .curve(curve) 
 
-        const dip_area = d3.area()
-            .x(d => xScale(d[data_map.x]))
-            .y0(height)
-            .y1(d => yScale(d[data_map.y]))
-            .curve(curve)
-            
-        const dip_fill = d3.line()
-            .x(d => xScale(d[data_map.x]))
-            .y(d => yScale(d[data_map.y]))
-            .curve(curve) 
-
-            dip_fill_group.append("path")
-            .attr('class','line_fill')
-            .attr('id','line_fill'+dip_id)
-            .style('opacity',0)
-            // .attr("id", "dip_fill")
-            .attr("fill", "white")
-            .attr("d", dip_fill(area));
-
-            dip_fill_group.append("path")
-            .attr('class','line_fill')
-            .attr('id','line_fill'+dip_id)
-            .style('opacity',0)
-            // .attr("id", "dip_area")
-            .attr("fill","#F1F2F2")
-            .attr("d", dip_area(dipstat.get(dip_id)));
-
-        document.getElementById('comparison-group').insertBefore(document.getElementById('dip_fill_group'+dip_id), document.getElementById('x-axis'));
-        
-        // dipstat.forEach(d => {
-        //     dip_fill_group
-        //     .append('g')
-        //     .selectAll('.tick-line')
-        //     .data(dipstat.get(dip_id))
-        //     .join("line")
-        //     .attr('class','tick-line')
-        //     .attr('id','tick-line'+dip_id)
-        //     .style('opacity',0)
-        //     .attr('y1',d => yScale(d[data_map.y])+radius)
-        //     .attr('y2',height)
-        //     .attr('x1',d => xScale(d[data_map.x]))
-        //     .attr('x2',d => xScale(d[data_map.x]))
-        //     .attr('stroke','#2A353C')
-        //     .style("stroke-dasharray", ("1.5, 1.5"));
-        // })
-
         dip_group.append("path")
-            // .attr('class','line')
             .attr('class','line_group')
             .attr('id','line_group'+dip_id)
             .style('opacity',0)
-            // .attr('id','line'+dip_id)
             .attr("fill", "none")
             .attr("stroke", "#334857")
             .attr("stroke-width", stroke_width)
-            .attr("d", dip(dipstat.get(dip_id)));
+            .attr("d", dip(area));
 
         dip_group.append("g")
             .selectAll(".circle")
-            .data(dipstat.get(dip_id))
+            .data(area)
             .join("circle")
             .attr('class',"circle")
             .attr('id',"circle"+dip_id)
             .style('opacity',0)
-            .attr("fill", 'white')
+            .attr("fill", '#F1F2F2')
             .attr('cx', d => xScale(d[data_map.x]))
             .attr('cy', d => yScale(d[data_map.y]))
             .attr('r', radius)
             .attr('stroke-width', stroke_width)
             .attr('stroke','#334857')
+
+            if (dip_id == 172){
+                d3.select('#circle172').attr('display','none')
+            }
 
     })
 
@@ -688,7 +699,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
                 .attr('x',xScale(x))
                 .attr('y',yScale(center))
 
-            svg.selectAll('tspan')
+            svg.selectAll('.tspan')
                 .attr('x',xScale(x))
         }
         
@@ -773,9 +784,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('.circle').style('opacity',0)
             .transition()
             .duration(2000);
-            // svg.selectAll('.tick-line').style('opacity',0)
-            // .transition()
-            // .duration(2000);
 
             svg.select('#binary-comparison').style('opacity',.5)
             .transition()
@@ -820,9 +828,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',1)
             .transition()
             .duration(2000);
-            // svg.selectAll('#tick-line'+dip_ids[0]).style('opacity',1)
-            // .transition()
-            // .duration(10000);
             svg.selectAll('#line_group'+dip_ids[1]).style('opacity',0)
             .transition()
             .duration(2000);
@@ -832,7 +837,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[1]).style('opacity',0)
             .transition()
             .duration(2000);
-            // svg.selectAll('#tick-line'+dip_ids[1]).style('opacity',0)
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)
@@ -868,9 +872,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
             .transition()
             .duration(2000);
-            // svg.selectAll('#tick-line'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
-            // .transition()
-            // .duration(10000);
             svg.selectAll('#line_group'+dip_ids[0]).style('opacity',0)
             .transition()
             .duration(2000);
@@ -880,7 +881,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',0)
             .transition()
             .duration(2000);
-            // svg.selectAll('#tick-line'+dip_ids[0]).style('opacity',0)
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)

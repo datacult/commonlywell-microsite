@@ -59,7 +59,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     }
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    var svgWidth = 1600 //parseInt(d3.select(selector).style('width'), 10)
     var svgHeight = (svgWidth / 2)
 
     var radius = 3.5
@@ -74,7 +74,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     } 
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    var svgWidth = 1600 //parseInt(d3.select(selector).style('width'), 10)
     var svgHeight = (svgWidth*1.4)
 
     var radius = 2
@@ -90,8 +90,9 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     d3.select(".linechart-svg").remove();
 
     const svg = body.append('svg')
-        .attr('height', svgHeight)
-        .attr('width', svgWidth)
+        // .attr('height', svgHeight)
+        // .attr('width', svgWidth)
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .attr('class', 'linechart-svg')
         .append('g')
         .attr('id','line-group')
@@ -679,10 +680,16 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .append('tspan')
             .attr('x',x_annotation_right)
             .attr('dy',line_height)
-            .text('RCI index increases by ')
+            .text('RCI increases by ')
             .append('tspan')
-            .text(increase+'%')
+            .text(increase+' points')
             .attr('font-weight', 700);
+
+        annote3
+            .append('tspan')
+            .attr('x',x_annotation_right)
+            .attr('dy',line_height)
+            .text(`after their first four assessments`);
 
         //step 4
         var x_annotation_middle = xScale(45);
