@@ -428,7 +428,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y2',yScale(bracket[1]+increase))
         .attr('stroke','#2A353C');
 
-    var ba_x = -70, ba_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+6), line_height = '1.1vw';
+    var ba_x = -70, ba_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+6), line_height = '2.5%';
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
@@ -493,7 +493,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('dy',line_height)
         .text('four assessments');
 
-    var la_x = xScale(7), la_center = 95;
+    var la_x = xScale(7), la_center = 85;
 
     var legend_annotation = svg.append('text')
         .attr('class','annotation_hover')

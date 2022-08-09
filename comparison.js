@@ -232,7 +232,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     if (window.outerWidth > 900){
 
-    var line_height = '2%';
+    var line_height = '2.5%';
     var annotation;
     var da_x = 0, da_center = 0;
 
@@ -725,7 +725,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             draw(tickVal,tickLabels);
 
             annotation = 'annotation1';
-            da_x = 3.5;
+            da_x = 2.5;
             da_center = 85;
 
             comp_image
@@ -770,8 +770,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             draw(tickVal,tickLabels);
 
             annotation = 'annotation2';
-            da_x = 33.5;
-            da_center = 85;
+            da_x = 32.5;
+            da_center = 87;
             
             svg.selectAll('.line_group').style('opacity',0)
             .transition()
@@ -811,8 +811,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             draw(tickVal,tickLabels);
 
             annotation = 'annotation3';
-            da_x = 33.5;
-            da_center = 85;
+            da_x = 62.5;
+            da_center = 90;
 
             svg.select('#binary-comparison').style('opacity',0)
             .transition()
@@ -854,7 +854,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             draw(tickVal,tickLabels);
 
             annotation = 'annotation4';
-            da_x = 182;
+            da_x = 182.5;
             da_center = 25;
             
             svg.select('#binary-comparison').style('opacity',0)
