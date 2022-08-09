@@ -27,7 +27,7 @@ GENERIC_PARTICIPANT_ID,ASSESSMENT_CREATED_AT,DAYS_FROM_FIRST_ASSESSMENT,TOTAL_RC
 260,2021-10-01 21:29:21.903,0,60.848148148,69.677777778,56.25,56.616666667,Insight Recovery Centers,VA,Female,White
 263,2021-10-06 18:04:42.056,0,53.438888889,48.85,58.333333333,53.133333333,Insight Recovery Centers,VA,Female,White
 268,2021-10-13 17:52:52.866,0,50,40.983333333,52.083333333,56.933333333,Insight Recovery Centers,VA,Female,White
-847,2021-11-26 19:03:18.527,0,74.457407407,68.522222222,83.333333333,71.516666667,Insight Recovery Centers,VA,Male,Black/African American
+847,2021-11-26 19:03:18.527,0,74.457407407,68.522222222,83.333333333,71.516666667,Insight Recovery Centers,VA,Male,Black / African American
 851,2021-12-01 22:03:41.147,0,58.872222222,67.583333333,54.866666667,54.166666667,Insight Recovery Centers,VA,Female,White
 851,2021-12-29 22:00:16.583,28,59.877777778,65.05,58.333333333,56.25,Insight Recovery Centers,VA,Female,White
 851,2022-02-27 21:55:49.200,88,71.262962963,75.238888889,66.666666667,71.883333333,Insight Recovery Centers,VA,Female,White
@@ -46,52 +46,52 @@ GENERIC_PARTICIPANT_ID,ASSESSMENT_CREATED_AT,DAYS_FROM_FIRST_ASSESSMENT,TOTAL_RC
 1239,2022-03-05 18:25:49.612,31,73.811111111,78.7,73.616666667,69.116666667,Insight Recovery Centers,VA,Female,White
 1784,2022-04-08 16:11:24.155,0,58.111111111,57.65,42.366666667,74.316666667,Insight Recovery Centers,VA,Female,White
 3175,2022-05-12 19:00:56.687,0,90.474074074,74.538888889,100,96.883333333,Insight Recovery Centers,VA,Female,White
-3409,2022-06-08 16:49:24.648,0,48.588888889,39.811111111,56.266666667,49.688888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black/African American
-3410,2022-06-08 20:56:10.327,0,70.783333333,37.5,92.35,82.5,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
-3478,2022-06-14 16:08:33.657,0,88.655555556,79.166666667,95.133333333,91.666666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
-3480,2022-06-14 16:41:00.042,0,38.15,40.288888889,46.516666667,27.644444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
+3409,2022-06-08 16:49:24.648,0,48.588888889,39.811111111,56.266666667,49.688888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black / African American
+3410,2022-06-08 20:56:10.327,0,70.783333333,37.5,92.35,82.5,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
+3478,2022-06-14 16:08:33.657,0,88.655555556,79.166666667,95.133333333,91.666666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
+3480,2022-06-14 16:41:00.042,0,38.15,40.288888889,46.516666667,27.644444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
 3481,2022-06-14 16:49:42.343,0,24.718518519,35.188888889,15.266666667,23.7,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3485,2022-06-14 18:54:15.387,0,65.511111111,48.611111111,94.433333333,53.488888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3488,2022-06-14 19:10:55.108,0,40.096296296,31.477777778,59.733333333,29.077777778,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3490,2022-06-14 19:44:17.888,0,66.483333333,51.166666667,74.666666667,73.616666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3495,2022-06-14 19:57:16.806,0,79.011111111,48.144444444,100,88.888888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
-3497,2022-06-15 15:23:50.032,0,86.914814815,74.533333333,98.616666667,87.594444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
+3495,2022-06-14 19:57:16.806,0,79.011111111,48.144444444,100,88.888888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
+3497,2022-06-15 15:23:50.032,0,86.914814815,74.533333333,98.616666667,87.594444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
 3502,2022-06-15 14:15:20.376,0,46.561111111,29.866666667,52.45,57.366666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
 3504,2022-06-15 14:33:21.033,0,79.72962963,61.122222222,95.833333333,82.233333333,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
 3506,2022-06-15 14:42:15.582,0,68.542592593,61.355555556,84.033333333,60.238888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3507,2022-06-15 14:58:39.982,0,50.4,30.088888889,70.833333333,50.277777778,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
 3508,2022-06-15 14:49:43.276,0,94.833333333,87.277777778,100,97.222222222,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3509,2022-06-15 14:55:15.847,0,91.324074074,86.111111111,94.433333333,93.427777778,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black/African American
-3510,2022-06-15 15:00:46.412,0,90.277777778,87.033333333,100,83.8,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
-3515,2022-06-15 15:25:47.298,0,91.67037037,94.444444444,80.566666667,100,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black/African American
+3509,2022-06-15 14:55:15.847,0,91.324074074,86.111111111,94.433333333,93.427777778,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black / African American
+3510,2022-06-15 15:00:46.412,0,90.277777778,87.033333333,100,83.8,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
+3515,2022-06-15 15:25:47.298,0,91.67037037,94.444444444,80.566666667,100,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black / African American
 3516,2022-06-15 18:33:23.288,0,64.640740741,55.088888889,69.116666667,69.716666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3518,2022-06-15 16:37:16.909,0,92.466666667,78.233333333,100,99.166666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
 3519,2022-06-15 16:42:53.744,0,58.459259259,45.366666667,86.8,43.211111111,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3528,2022-06-16 15:32:18.588,0,54.583333333,35.888888889,75.35,52.511111111,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3529,2022-06-16 15:40:39.014,0,95.177777778,90.733333333,96.183333333,98.616666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black/African American
-3530,2022-06-16 15:49:18.211,0,43.659259259,29.155555556,54.183333333,47.638888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
+3529,2022-06-16 15:40:39.014,0,95.177777778,90.733333333,96.183333333,98.616666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black / African American
+3530,2022-06-16 15:49:18.211,0,43.659259259,29.155555556,54.183333333,47.638888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
 3531,2022-06-16 15:50:30.112,0,54.17037037,42.133333333,57.633333333,62.744444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Other
 3532,2022-06-16 16:01:10.462,0,85.275925926,80.322222222,85.783333333,89.722222222,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3533,2022-06-16 16:11:21.634,0,50.181481481,31.022222222,68.416666667,51.105555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
 3534,2022-06-16 16:10:32.421,0,61.625925926,49.777777778,83.333333333,51.766666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3535,2022-06-16 16:21:58.495,0,79.038888889,84.255555556,93.05,59.811111111,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
+3535,2022-06-16 16:21:58.495,0,79.038888889,84.255555556,93.05,59.811111111,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
 3536,2022-06-16 17:14:07.525,0,71.662962963,63.877777778,80.55,70.561111111,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3537,2022-06-16 17:26:32.772,0,46.451851852,24.533333333,65.966666667,48.855555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
+3537,2022-06-16 17:26:32.772,0,46.451851852,24.533333333,65.966666667,48.855555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
 3538,2022-06-16 17:39:39.469,0,41.374074074,27.311111111,61.116666667,35.694444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3540,2022-06-16 18:43:23.208,0,74.305555556,58.333333333,94.433333333,70.15,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic or Latino
+3540,2022-06-16 18:43:23.208,0,74.305555556,58.333333333,94.433333333,70.15,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Hispanic / Latino
 3541,2022-06-16 18:49:01.038,0,85.97962963,77.311111111,87.15,93.477777778,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
-3545,2022-06-16 20:45:42.312,0,59.705555556,53.011111111,71.2,54.905555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
+3545,2022-06-16 20:45:42.312,0,59.705555556,53.011111111,71.2,54.905555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
 3546,2022-06-16 20:59:34.773,0,72.97962963,80.088888889,78.483333333,60.366666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3565,2022-06-17 14:43:58.696,0,52.690740741,57.411111111,62.516666667,38.144444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
-3568,2022-06-17 15:01:31.286,0,67.951851852,68.988888889,71.533333333,63.333333333,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
+3565,2022-06-17 14:43:58.696,0,52.690740741,57.411111111,62.516666667,38.144444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
+3568,2022-06-17 15:01:31.286,0,67.951851852,68.988888889,71.533333333,63.333333333,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
 3572,2022-06-17 15:19:13.306,0,83.722222222,56.722222222,100,94.444444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3926,2022-06-21 20:36:14.718,0,83.607407407,63.888888889,97.216666667,89.716666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Hispanic or Latino
+3926,2022-06-21 20:36:14.718,0,83.607407407,63.888888889,97.216666667,89.716666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Hispanic / Latino
 3928,2022-06-21 21:34:19.583,0,58.32962963,56.955555556,67.383333333,50.65,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,White
-3958,2022-06-23 14:09:49.284,0,43.909259259,41.444444444,48.616666667,41.666666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black/African American
-3960,2022-06-23 14:23:38.055,0,75.383333333,65.511111111,90.633333333,70.005555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black/African American
+3958,2022-06-23 14:09:49.284,0,43.909259259,41.444444444,48.616666667,41.666666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black / African American
+3960,2022-06-23 14:23:38.055,0,75.383333333,65.511111111,90.633333333,70.005555556,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,Black / African American
 3968,2022-06-23 16:17:00.638,0,56.487037037,50.7,72.233333333,46.527777778,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
 3969,2022-06-23 16:27:27.985,0,37.251851852,31.022222222,62.866666667,17.866666667,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
-3970,2022-06-23 16:37:45.158,0,96.138888889,91.2,97.216666667,100,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
-4010,2022-06-24 20:39:19.583,0,73.925925926,71.3,84.733333333,65.744444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black/African American
+3970,2022-06-23 16:37:45.158,0,96.138888889,91.2,97.216666667,100,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
+4010,2022-06-24 20:39:19.583,0,73.925925926,71.3,84.733333333,65.744444444,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Male,Black / African American
 4036,2022-06-28 14:02:34.192,0,49.614814815,48.844444444,50,50,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Declined to answer,Declined to answer
 4037,2022-06-28 14:16:55.295,0,59.222222222,49.311111111,67.716666667,60.638888889,"Drug Abuse Foundation of Palm Beach County, Inc",FL,Female,White
