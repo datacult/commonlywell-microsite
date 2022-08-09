@@ -86,52 +86,61 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     ////////////////////////////////////
     //////////scroll observers//////////
     ////////////////////////////////////
+    let options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: [.75]
+      };
 
     const binary = document.querySelector('#binary');
 
-    const binaryObserver = new IntersectionObserver((entry, observer) => {
-
-        if (entry[0].isIntersecting == true) {
-            step = 1
-            update()
-        }
-    });
+    const binaryObserver = new IntersectionObserver(handleBinary, options);
+    
+        function handleBinary(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
+                step = 1
+                update()
+            }
+        };
 
     binaryObserver.observe(binary);
 
     const both = document.querySelector('#both');
 
-    const bothObserver = new IntersectionObserver((entry, observer) => {
-
-        if (entry[0].isIntersecting == true) {
-            step = 2
-            update()
-        }
-    });
+    const bothObserver = new IntersectionObserver(handleBoth, options);
+    
+        function handleBoth(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
+                step = 2
+                update()
+            }
+        };
 
     bothObserver.observe(both);
 
     const highlight = document.querySelector('#highlight');
 
-    const highlightObserver = new IntersectionObserver((entry, observer) => {
-
-        if (entry[0].isIntersecting == true) {
-            step = 3
-            update()
-        }
-    });
+    const highlightObserver = new IntersectionObserver(handleHighlight, options);
+    
+        function handleHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
+                step = 3
+                update()
+            }
+        };
 
     highlightObserver.observe(highlight);
 
     const lateHighlight = document.querySelector('#late-highlight');
 
-    const lateHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-        if (entry[0].isIntersecting == true) {
-            step = 4
-            update()
-        }
-    });
+    const lateHighlightObserver = new IntersectionObserver(handleLateHighlight, options);
+    
+        function handleLateHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
+                step = 4
+                update()
+            }
+        };
 
     lateHighlightObserver.observe(lateHighlight);
 

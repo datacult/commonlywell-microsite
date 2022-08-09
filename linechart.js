@@ -98,102 +98,114 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     //////////scroll observers//////////
     ////////////////////////////////////
     let stp = 1;
+    let options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: [.75]
+      };
 
     if (window.outerWidth > 900){
+        
         const activeTreatment = document.querySelector('#active-treatment');
+
+        const activeTreatmentObserver = new IntersectionObserver(handleActiveTreatment, options);
     
-        const activeTreatmentObserver = new IntersectionObserver((entry, observer) => {
-    
-            if (entry[0].isIntersecting == true) {
+        function handleActiveTreatment(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 1
                 desktopUpdate()
             }
-        });
+        };
     
         activeTreatmentObserver.observe(activeTreatment);
 
         const individualHighlight = document.querySelector('#individual-highlight');
-        
-        const individualHighlightObserver = new IntersectionObserver((entry, observer) => {
 
-            if (entry[0].isIntersecting == true) {
+        const individualHighlightObserver = new IntersectionObserver(handleIndividualHighlight, options);
+    
+        function handleIndividualHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 2
                 desktopUpdate()
             }
-        });
+        };
 
         individualHighlightObserver.observe(individualHighlight);
 
         const indicatorHighlight = document.querySelector('#indicator-highlight');
 
-        const indicatorHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const indicatorHighlightObserver = new IntersectionObserver(handleIndicatorHighlight, options);
+    
+        function handleIndicatorHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 3
                 desktopUpdate()
             }
-        });
+        };
 
         indicatorHighlightObserver.observe(indicatorHighlight);
     } else {
 
         const activeTreatment = document.querySelector('#active-treatment');
     
-        const activeTreatmentObserver = new IntersectionObserver((entry, observer) => {
+        const activeTreatmentObserver = new IntersectionObserver(handleActiveTreatment, options);
     
-            if (entry[0].isIntersecting == true) {
+        function handleActiveTreatment(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 1
-                mobileUpdate()
+                desktopUpdate()
             }
-        });
+        };
     
         activeTreatmentObserver.observe(activeTreatment);
 
         const baseRange = document.querySelector('#base-range');
 
-        const baseRangeObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const baseRangeObserver = new IntersectionObserver(handleBaseRange, options);
+    
+        function handleBaseRange(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 2
                 mobileUpdate()
             }
-        });
+        };
 
         baseRangeObserver.observe(baseRange);
 
         const increaseRange = document.querySelector('#increase-range');
 
-        const increaseRangeObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const increaseRangeObserver = new IntersectionObserver(handleIncreaseRange, options);
+    
+        function handleIncreaseRange(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 3
                 mobileUpdate()
             }
-        });
+        };
 
         increaseRangeObserver.observe(increaseRange);
 
         const individualHighlight = document.querySelector('#individual-highlight');
         
-        const individualHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const individualHighlightObserver = new IntersectionObserver(handleIndividualHighlight, options);
+    
+        function handleIndividualHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 4
                 mobileUpdate()
             }
-        });
+        };
 
         individualHighlightObserver.observe(individualHighlight);
 
-        const indicatorHighlight = document.querySelector('#indicator-highlight');
-
-        const indicatorHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const indicatorHighlightObserver = new IntersectionObserver(handleIndicatorHighlight, options);
+    
+        function handleIndicatorHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 5
                 mobileUpdate()
             }
-        });
+        };
 
         indicatorHighlightObserver.observe(indicatorHighlight);
 
