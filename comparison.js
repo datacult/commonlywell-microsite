@@ -617,7 +617,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     //draw highlights
     var dipstat = d3.group(data, d => d[data_map.group]);
-    console.log(dipstat)
 
     dip_ids.forEach((dip_id) => {
         var area = [...dipstat.get(dip_id)];
@@ -718,7 +717,6 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     function update(val){
 
         // if (val) step = val.target.value;
-        console.log(step)
 
         if (step == 1) {
 
