@@ -612,7 +612,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     var img_width = xScale(30), img_height = img_width/(332/229)
     var comp_image = svg.append('image')
         .attr('id','binary-comparison')
-        .attr('href','assets/binary.svg')
+        .attr('href','https://datacult.github.io/commonlywell-microsite/assets/binary.svg')
         .style('opacity',0);
 
     //draw highlights
