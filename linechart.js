@@ -2,19 +2,8 @@
 
 let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'y_value', y3:'y_value', group:'step_value'}, selector = '#linechart') => {
 
-    var highlight_id = 104
-    let sample = []
-    data = data.filter(d => d.PROVIDER !== 'Commonly Well');
-
-    data.forEach(i => {
-        var count = [...data].filter(d => d[data_map.group] == i[data_map.group])
-        // console.log(count)
-        var zero = count.filter(d => d[data_map.x] == 0)
-        // console.log(zero)
-        if (count.length > 3 && zero.length < 2){
-            sample.push(i[data_map.group])
-        }
-    })
+    let sample = [763,902,160,146,125,120,355,104,1035,1091,169,158,107,123,116,357,358,485,747,16,210,370,455,511,1041,1671,1639,141,162,1258,933,1148,138,913,159,539]
+    var highlight_id = sample[3]
 
     // Shuffle array
     const shuffled = sample.sort(() => 0.5 - Math.random());
@@ -38,8 +27,6 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
       }
 
     data = data.sort(compare);
-
-    // var highlight_id = 104//109
 
     ////////////////////////////////////
     //////////// svg setup /////////////
@@ -92,6 +79,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     const svg = body.append('svg')
         .attr('height', svgHeight)
         .attr('width', svgWidth)
+        // .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .attr('class', 'linechart-svg')
         .append('g')
         .attr('id','line-group')
@@ -679,10 +667,16 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .append('tspan')
             .attr('x',x_annotation_right)
             .attr('dy',line_height)
-            .text('RCI index increases by ')
+            .text('RCI increases by ')
             .append('tspan')
-            .text(increase+'%')
+            .text(increase+' points')
             .attr('font-weight', 700);
+
+        annote3
+            .append('tspan')
+            .attr('x',x_annotation_right)
+            .attr('dy',line_height)
+            .text(`after their first four assessments`);
 
         //step 4
         var x_annotation_middle = xScale(45);
