@@ -29,8 +29,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     
     // margins for SVG
     var margin = {
-        left: 250,
-        right: 250,
+        left: 210,
+        right: 210,
         top: 100,
         bottom: 100
     }
