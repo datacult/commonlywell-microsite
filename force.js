@@ -24,8 +24,8 @@ let force = ((data, selector = '#force') => {
     }
 
     // responsive width & height
-    const svgWidth = 1600 // parseInt(d3.select(selector).style('width'), 10)
-    const svgHeight = svgWidth / 2
+    const svgWidth = 1400 // parseInt(d3.select(selector).style('width'), 10)
+    const svgHeight = svgWidth / 2.5
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -53,7 +53,7 @@ let force = ((data, selector = '#force') => {
     const transition_time = 750
 
     const labels_offset = -100
-    const radius = 20
+    const radius = 15
     const metric_strength = 0.3
     const cluster_strength = 1
 
@@ -110,7 +110,7 @@ let force = ((data, selector = '#force') => {
 
     const labelOffsetScale = d3.scaleSymlog()
         .domain([1, 30])
-        .range([10, 100])
+        .range([10, 50])
 
     const colorScales = {}
 
