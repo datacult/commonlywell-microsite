@@ -39,8 +39,8 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     
     // margins for SVG
     var margin = {
-        left: 200,
-        right: 200,
+        left: 210,
+        right: 210,
         top: 100,
         bottom: 100
     }
@@ -98,102 +98,116 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     //////////scroll observers//////////
     ////////////////////////////////////
     let stp = 1;
+    let options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: [.75]
+      };
 
     if (window.outerWidth > 900){
+        
         const activeTreatment = document.querySelector('#active-treatment');
+
+        const activeTreatmentObserver = new IntersectionObserver(handleActiveTreatment, options);
     
-        const activeTreatmentObserver = new IntersectionObserver((entry, observer) => {
-    
-            if (entry[0].isIntersecting == true) {
+        function handleActiveTreatment(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 1
                 desktopUpdate()
             }
-        });
+        };
     
         activeTreatmentObserver.observe(activeTreatment);
 
         const individualHighlight = document.querySelector('#individual-highlight');
-        
-        const individualHighlightObserver = new IntersectionObserver((entry, observer) => {
 
-            if (entry[0].isIntersecting == true) {
+        const individualHighlightObserver = new IntersectionObserver(handleIndividualHighlight, options);
+    
+        function handleIndividualHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 2
                 desktopUpdate()
             }
-        });
+        };
 
         individualHighlightObserver.observe(individualHighlight);
 
         const indicatorHighlight = document.querySelector('#indicator-highlight');
 
-        const indicatorHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const indicatorHighlightObserver = new IntersectionObserver(handleIndicatorHighlight, options);
+    
+        function handleIndicatorHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 3
                 desktopUpdate()
             }
-        });
+        };
 
         indicatorHighlightObserver.observe(indicatorHighlight);
     } else {
 
         const activeTreatment = document.querySelector('#active-treatment');
     
-        const activeTreatmentObserver = new IntersectionObserver((entry, observer) => {
+        const activeTreatmentObserver = new IntersectionObserver(handleActiveTreatment, options);
     
-            if (entry[0].isIntersecting == true) {
+        function handleActiveTreatment(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 1
                 mobileUpdate()
             }
-        });
+        };
     
         activeTreatmentObserver.observe(activeTreatment);
 
         const baseRange = document.querySelector('#base-range');
 
-        const baseRangeObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const baseRangeObserver = new IntersectionObserver(handleBaseRange, options);
+    
+        function handleBaseRange(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 2
                 mobileUpdate()
             }
-        });
+        };
 
         baseRangeObserver.observe(baseRange);
 
         const increaseRange = document.querySelector('#increase-range');
 
-        const increaseRangeObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const increaseRangeObserver = new IntersectionObserver(handleIncreaseRange, options);
+    
+        function handleIncreaseRange(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 3
                 mobileUpdate()
             }
-        });
+        };
 
         increaseRangeObserver.observe(increaseRange);
 
         const individualHighlight = document.querySelector('#individual-highlight');
         
-        const individualHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        const individualHighlightObserver = new IntersectionObserver(handleIndividualHighlight, options);
+    
+        function handleIndividualHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 4
                 mobileUpdate()
             }
-        });
+        };
 
         individualHighlightObserver.observe(individualHighlight);
 
         const indicatorHighlight = document.querySelector('#indicator-highlight');
-
-        const indicatorHighlightObserver = new IntersectionObserver((entry, observer) => {
-
-            if (entry[0].isIntersecting == true) {
+        
+        const indicatorHighlightObserver = new IntersectionObserver(handleIndicatorHighlight, options);
+    
+        function handleIndicatorHighlight(entry, observer) {
+            if (entry[0].intersectionRatio > .75) {
                 stp = 5
                 mobileUpdate()
             }
-        });
+        };
 
         indicatorHighlightObserver.observe(indicatorHighlight);
 
@@ -318,6 +332,16 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('fill','white')
         .attr('opacity',1);
 
+        svg.append('rect')
+        .attr('class','mobile_annotation')
+        .attr('id','increase_rect')
+        .attr('x',width+15)
+        .attr('y',yScale(bracket[1]+increase))
+        .attr('height',yScale(bracket[0]+increase)-yScale(bracket[1]+increase))
+        .attr('width',xScale(20)-(width+15-xScale(80)))
+        .attr('fill','#F1F2F3')
+        .attr('opacity',0);
+
     if (window.outerWidth > 900){
     svg.select('#active_rect').attr('opacity',1)
 
@@ -428,7 +452,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y2',yScale(bracket[1]+increase))
         .attr('stroke','#2A353C');
 
-    var ba_x = -70, ba_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+6), line_height = '1.1vw';
+    var ba_x = -70, ba_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+6), line_height = '2.5%';
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
@@ -493,12 +517,12 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('dy',line_height)
         .text('four assessments');
 
-    var la_x = xScale(7), la_center = 95;
+    var la_x = xScale(7), la_center = 92;
 
     var legend_annotation = svg.append('text')
         .attr('class','annotation_hover')
         .attr('x',la_x)
-        .attr('dy',yScale(la_center))
+        .attr('y',yScale(la_center))
         .attr('font-size','.9vw');
 
     legend_annotation.append('tspan')
@@ -920,7 +944,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.line_group').attr('opacity',1);
             svg.selectAll('.ann').attr('opacity',0);
             svg.select('#ann1').attr('opacity',1);
-            svg.select('#increase_rect').attr('opacity',0);
+            svg.selectAll('#increase_rect').attr('opacity',0);
             svg.select('#base_rect').attr('opacity',0);
         } else if (stp == 2){
             svg.select('#active_rect').attr('opacity',0);
@@ -928,7 +952,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.line_group').attr('opacity',1);
             svg.selectAll('.ann').attr('opacity',0);
             svg.select('#ann2').attr('opacity',1);
-            svg.select('#increase_rect').attr('opacity',0);
+            svg.selectAll('#increase_rect').attr('opacity',0);
             svg.select('#base_rect').attr('opacity',1);
         } else if (stp == 3){
             svg.select('#active_rect').attr('opacity',0);
@@ -936,7 +960,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.line_group').attr('opacity',1);
             svg.selectAll('.ann').attr('opacity',0);
             svg.select('#ann3').attr('opacity',1);
-            svg.select('#increase_rect').attr('opacity',1);
+            svg.selectAll('#increase_rect').attr('opacity',1);
             svg.select('#base_rect').attr('opacity',0);
         } else if (stp = 4){
             svg.select('#active_rect').attr('opacity',0);
@@ -946,26 +970,25 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.ann').attr('opacity',0);
             svg.select('#ann4').attr('opacity',1);
             svg.select('#ann4b').attr('opacity',1);
-            svg.select('#increase_rect').attr('opacity',0);
+            svg.selectAll('#increase_rect').attr('opacity',0);
             svg.select('#base_rect').attr('opacity',0);
 
             indicators.forEach(indicator => { 
         
-                d3.select('#indicator'+data_map[indicator])
+                svg.select('#indicator'+data_map[indicator])
                     .attr("d", line(sumstat.get(highlight_id)));
 
                 d3.selectAll('.'+data_map[indicator]+"_circle")
                     .attr('cy', d => yScale(d[data_map.y]));
             });
         } else {
-            console.log('test')
             svg.select('#active_rect').attr('opacity',0);
             svg.selectAll('.indicator_group').attr('opacity',1);
             svg.selectAll('.line_group').attr('opacity',0);
             svg.selectAll('.ann').attr('opacity',0);
             svg.select('#ann4').attr('opacity',1);
             svg.select('#ann4b').attr('opacity',1);
-            svg.select('#increase_rect').attr('opacity',0);
+            svg.selectAll('#increase_rect').attr('opacity',0);
             svg.select('#base_rect').attr('opacity',0);
 
             indicators.forEach(indicator => {

@@ -58,6 +58,18 @@ rect, path, line {
     height: 110vh;
 }
 
+/* #active-treatment {
+    background-color: red;
+}
+
+#individual-highlight {
+    background-color: blue;
+}
+
+#indicator-highlight {
+    background-color: yellow;
+} */
+
 #active-treatment, #base-range, #increase-range, #individual-highlight, #indicator-highlight {
-    height: 110vh;
+    height: 75vh;
 }
