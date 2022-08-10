@@ -243,41 +243,41 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     var line_height = '2.5%';
     var annotation;
-    var da_x = 0, da_center = 0;
+    var da_x = 2.5, da_center = 85;
 
     // //step 1
     let txt1 = svg.append('text')
         .attr('id','annotation1')
         .attr('alignment-baseline','middle')
-        .attr('x',da_x)
+        .attr('x',xScale(da_x))
         .attr('y',yScale(da_center))
         .attr('font-size','1vw')
-        .style('opacity',0)
+        // .style('opacity',0)
 
         txt1
         .append('tspan')
         .attr('class','tspan')
-        .attr('x',da_x)
+        .attr('x',xScale(da_x))
         .text('Traditionally, measuring')
 
         txt1
         .append('tspan')
         .attr('class','tspan')
-        .attr('x',da_x)
+        .attr('x',xScale(da_x))
         .attr('dy',line_height)
         .text('recovery as binary has meant')
 
         txt1
         .append('tspan')
         .attr('class','tspan')
-        .attr('x',da_x)
+        .attr('x',xScale(da_x))
         .attr('dy',line_height)
         .text(`that a setback causes a reset to`)
 
         txt1
         .append('tspan')
         .attr('class','tspan')
-        .attr('x',da_x)
+        .attr('x',xScale(da_x))
         .attr('dy',line_height)
         .text(`an individual's progress.`);
 
@@ -428,6 +428,16 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .style('fill','white')
         .style('opacity',.5);
 
+        var bg_size = document.getElementById('annotation1').getBBox(), padding = 10;
+            
+        bg_rect.attr('x',bg_size.x-padding)
+            .attr('y',bg_size.y-padding)
+            .attr('height',bg_size.height+padding*2)
+            .attr('width',bg_size.width+padding*2);
+
+        document.getElementById('comparison-group').insertBefore(document.getElementById('annotation_rect'), document.getElementById('annotation1'));
+
+
     
     } else {
         //mobile annotations
@@ -439,7 +449,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr('font-size',font_size)
             .attr('x',x_annotation)
             .attr('y',y_annotation)
-            .style('opacity',0)
+            // .style('opacity',0)
 
         ann1
             .append('tspan')
@@ -622,7 +632,13 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     var comp_image = svg.append('image')
         .attr('id','binary-comparison')
         .attr('href','https://datacult.github.io/commonlywell-microsite/assets/binary.svg')
-        .style('opacity',0);
+        .attr('x',xScale(0))
+        .attr('width',img_width)
+        .attr('height',img_height);
+        // .style('opacity',0);
+
+    
+        comp_image.attr('y',yScale(0)-document.getElementById('binary-comparison').getBBox().height);
 
     //draw highlights
     var dipstat = d3.group(data, d => d[data_map.group]);
@@ -737,10 +753,10 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             da_x = 2.5;
             da_center = 85;
 
-            comp_image
-            .attr('x',xScale(0))
-            .attr('width',img_width)
-            .attr('height',img_height);
+            // comp_image
+            // .attr('x',xScale(0))
+            // .attr('width',img_width)
+            // .attr('height',img_height);
 
             svg.selectAll('.line_group').style('opacity',0)
             .transition()
@@ -792,13 +808,13 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .transition()
             .duration(2000);
 
-            svg.select('#binary-comparison').style('opacity',.5)
+            svg.select('#binary-comparison').style('opacity',.75)
             .transition()
             .duration(2000);
-            svg.select('#line_group'+dip_ids[0]).style('opacity',.5)
+            svg.select('#line_group'+dip_ids[0]).style('opacity',.75)
             .transition()
             .duration(2000);
-            svg.selectAll('#circle'+dip_ids[0]).style('opacity',.5)
+            svg.selectAll('#circle'+dip_ids[0]).style('opacity',.75)
             .transition()
             .duration(2000);
 

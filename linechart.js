@@ -517,12 +517,12 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('dy',line_height)
         .text('four assessments');
 
-    var la_x = xScale(7), la_center = 85;
+    var la_x = xScale(7), la_center = 92;
 
     var legend_annotation = svg.append('text')
         .attr('class','annotation_hover')
         .attr('x',la_x)
-        .attr('dy',yScale(la_center))
+        .attr('y',yScale(la_center))
         .attr('font-size','.9vw');
 
     legend_annotation.append('tspan')
