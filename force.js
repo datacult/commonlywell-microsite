@@ -173,8 +173,8 @@ let force = ((data, selector = '#force') => {
 
 
     let wrangled = metrics.map(d => {
-        return filtered.map(x => { 
-            return { ...x, metric: d, radius: d == 'TOTAL_RCI_SCORE' ? use_size ? sizeScale(x[d]) * radius : radius : 1e-6 } 
+        return filtered.map(x => {
+            return { ...x, metric: d, radius: d == 'TOTAL_RCI_SCORE' ? use_size ? sizeScale(x[d]) * radius : radius : 1e-6 }
         })
     }).flat()
 
@@ -193,14 +193,12 @@ let force = ((data, selector = '#force') => {
     let bubbles = bubble_groups
         .append('circle')
         .attr('fill', d => colorScales[d.metric](d[d.metric]))
-        .attr('stroke', 'none')
-        .attr('stroke-width', 2)
         .attr('class', 'bubbles')
         .on('mouseover', function (d, i) {
 
             wrangled.forEach(x => {
-                if (x == wrangled[bubbles.nodes().indexOf(this)]){
-                    x.OLD = {radius : x.radius}
+                if (x == wrangled[bubbles.nodes().indexOf(this)]) {
+                    x.OLD = { radius: x.radius }
                     x.radius = 20
                 }
             })
@@ -234,7 +232,7 @@ let force = ((data, selector = '#force') => {
         .on('mouseout', function (d, i) {
 
             wrangled.forEach(x => {
-                if (x == wrangled[bubbles.nodes().indexOf(this)]){
+                if (x == wrangled[bubbles.nodes().indexOf(this)]) {
                     x.radius = x.OLD.radius
                 }
             })
@@ -256,16 +254,16 @@ let force = ((data, selector = '#force') => {
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
-    
-        setTimeout(() => {
-            bubbles.transition()
+
+    setTimeout(() => {
+        bubbles.transition()
             .duration(transition_time)
             .delay(function (d, i) { return i * 10; })
             .attrTween("r", function (d) {
                 var i = d3.interpolate(0, d.radius);
                 return function (t) { return d.radius = i(t); };
             });
-        }, 500)
+    }, 500)
 
     let labels = svg.selectAll('.labels')
         .data(label_coords)
@@ -425,7 +423,7 @@ let force = ((data, selector = '#force') => {
             for (const d of nodes) {
                 const r = d.radius + maxRadius;
 
-                const nx1 = d.x - r 
+                const nx1 = d.x - r
                 const ny1 = d.y - r
                 const nx2 = d.x + r
                 const ny2 = d.y + r;
@@ -543,12 +541,16 @@ let force = ((data, selector = '#force') => {
         wrangled.forEach(d => d.radius = d.metric == 'TOTAL_RCI_SCORE' ? use_size ? sizeScale(d[d.metric]) * rci_radius : rci_radius : use_size ? sizeScale(d[d.metric]) * other_radius : other_radius)
 
         bubbles
+            .filter(d => d.OLD[d.metric] != d[d.metric])
+            .attr('fill', d => colorScales[d.metric](100))
             .transition()
             .duration(transition_time)
             .delay(function (d, i) { return i * 10; })
-            .attr("r", d => d.radius);
+            .attr("r", d => d.radius)
+            .attr('fill', d => colorScales[d.metric](d[d.metric]))
 
-        simulation.alpha(0.01).restart()
+
+        simulation.alpha(0.01).restart();
 
     }
 
