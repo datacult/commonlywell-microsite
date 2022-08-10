@@ -371,7 +371,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y',rect_size.y-padding)
         .attr('height',rect_size.height+padding*2)
         .attr('width',rect_size.width+padding*2)
-        .style('fill','#F5F6F7');
+        .style('fill','#F1F2F3');
 
     document.getElementById('line-group').insertBefore(document.getElementById('treatment_rect'), document.getElementById('treatment_annotation'));
     
@@ -521,6 +521,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
 
     var legend_annotation = svg.append('text')
         .attr('class','annotation_hover')
+        .attr('id','annotation_legend')
         .attr('x',la_x)
         .attr('y',yScale(la_center))
         .attr('font-size','.9vw');
@@ -571,6 +572,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
 
     var domain_annotation = svg.append('text')
         .attr('class','annotation_hover')
+        .attr('id','annotation_domain')
         .attr('x',da_x)
         .attr('y',yScale(da_center))
         .attr('font-size','.9vw');
@@ -904,7 +906,8 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.line_group').attr('opacity',0);
             svg.select('#line_group'+highlight_id).attr('opacity',1);
             svg.selectAll('.annotation').attr('opacity',0);
-            svg.selectAll('.annotation_hover').attr('opacity',1);
+            svg.selectAll('#annotation_legend').attr('opacity',1);
+            svg.selectAll('#annotation_domain').attr('opacity',0);
 
             indicators.forEach(indicator => { 
         
@@ -919,7 +922,8 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.indicator_group').attr('opacity',1);
             svg.selectAll('.line_group').attr('opacity',0);
             svg.selectAll('.annotation').attr('opacity',0);
-            svg.selectAll('.annotation_hover').attr('opacity',1);
+            svg.selectAll('#annotation_legend').attr('opacity',1);
+            svg.selectAll('#annotation_domain').attr('opacity',1);
 
             indicators.forEach(indicator => {
 
@@ -969,7 +973,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.select('#line_group'+highlight_id).attr('opacity',1);
             svg.selectAll('.ann').attr('opacity',0);
             svg.select('#ann4').attr('opacity',1);
-            svg.select('#ann4b').attr('opacity',1);
+            // svg.select('#ann4b').attr('opacity',1);
             svg.selectAll('#increase_rect').attr('opacity',0);
             svg.select('#base_rect').attr('opacity',0);
 
