@@ -640,6 +640,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     
         comp_image.attr('y',yScale(0)-document.getElementById('binary-comparison').getBBox().height);
+        document.getElementById('comparison-group').insertBefore(document.getElementById('binary-comparison'), document.getElementById('x-axis-comparison'));
+        
 
     //draw highlights
     var dipstat = d3.group(data, d => d[data_map.group]);
