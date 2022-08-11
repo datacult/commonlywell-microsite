@@ -219,6 +219,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr("class", 'axis')
         .attr("id", "y-axis")
         .attr("transform", `translate(-10,0)`)
+        .attr('opacity',0)
         .call(yAxis)
 
     svg.select('#y-axis .domain')
@@ -773,6 +774,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('.tick-line').style('opacity',0)
             .transition()
             .duration(2000);
+            svg.select("#y-axis").attr('opacity',0);
 
             svg.select('#binary-comparison').style('opacity',1)
             .transition()
@@ -810,6 +812,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.selectAll('.circle').style('opacity',0)
             .transition()
             .duration(2000);
+
+            svg.select("#y-axis").attr('opacity',1);
 
             svg.select('#binary-comparison').style('opacity',.75)
             .transition()
@@ -864,6 +868,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .transition()
             .duration(2000);
 
+            svg.select("#y-axis").attr('opacity',1);
+
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)
             .transition()
@@ -888,6 +894,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.select('#binary-comparison').style('opacity',0)
             .transition()
             .duration(2000);
+
+            svg.select("#y-axis").attr('opacity',1);
 
             svg.selectAll('#line_group'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
             .transition()
