@@ -46,7 +46,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     }
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    var svgWidth = 1400//parseInt(d3.select(selector).style('width'), 10)
     var svgHeight = (svgWidth / 2)
 
     var radius = 3.5
@@ -56,13 +56,13 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     var margin = {
         left: 40,
         right: 40,
-        top: 150,
-        bottom: 230
+        top: 180,
+        bottom: 250
     } 
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
-    var svgHeight = (svgWidth*1.4)
+    var svgWidth = 400//parseInt(d3.select(selector).style('width'), 10)
+    var svgHeight = svgWidth/0.65//(svgWidth*1.4)
 
     var radius = 2
     var stroke_width = 1.5
@@ -77,9 +77,9 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     d3.select(".linechart-svg").remove();
 
     const svg = body.append('svg')
-        .attr('height', svgHeight)
-        .attr('width', svgWidth)
-        // .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
+        // .attr('height', svgHeight)
+        // .attr('width', svgWidth)
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .attr('class', 'linechart-svg')
         .append('g')
         .attr('id','line-group')
@@ -351,7 +351,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('x',xScale(30))
         .attr('y',yScale(10))
         .attr('text-anchor','middle')
-        .attr('font-size','1vw')
+        .attr('font-size',16)
 
     treatment
         .append('tspan')
@@ -452,14 +452,14 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y2',yScale(bracket[1]+increase))
         .attr('stroke','#2A353C');
 
-    var ba_x = -70, ba_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+6), line_height = '2.5%';
+    var ba_x = -70, ba_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+6), line_height = '2.5%', font_size = 14;
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
         .attr('x',ba_x)
         .attr('y',ba_y)
         .attr('text-anchor','end')
-        .attr('font-size','.9vw');
+        .attr('font-size',font_size);
 
     base_annotation.append('tspan')
         .attr('x',ba_x)
@@ -473,7 +473,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .text('readings')
         .append('tspan')
         .text(' fall in')
-        .attr('font-weight', 300);
+        .attr('font-weight', 400);
 
     base_annotation.append('tspan')
         .attr('x',ba_x)
@@ -487,7 +487,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('class','annotation')
         .attr('x',ia_x)
         .attr('y',ia_y)
-        .attr('font-size','.9vw');
+        .attr('font-size',font_size);
 
     increase_annotation.append('tspan')
         .attr('x',ia_x)
@@ -524,7 +524,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('id','annotation_legend')
         .attr('x',la_x)
         .attr('y',yScale(la_center))
-        .attr('font-size','.9vw');
+        .attr('font-size',font_size);
 
     legend_annotation.append('tspan')
         .attr('x',la_x)
@@ -541,7 +541,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('fill',indicatorColorScale('personal'))
         .append('tspan')
         .text(',')
-        .attr('font-weight', 300)
+        .attr('font-weight', 400)
         .attr('fill','black');
 
     legend_annotation.append('tspan')
@@ -552,7 +552,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('fill',indicatorColorScale('social'))
         .append('tspan')
         .text(', and')
-        .attr('font-weight', 300)
+        .attr('font-weight', 400)
         .attr('fill','black')
         .append('tspan')
         .text(' cultural')
@@ -560,7 +560,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('fill',indicatorColorScale('cultural'))
         .append('tspan')
         .text(' scores')
-        .attr('font-weight', 300)
+        .attr('font-weight', 400)
         .attr('fill','black');
 
     legend_annotation.append('tspan')
@@ -575,7 +575,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('id','annotation_domain')
         .attr('x',da_x)
         .attr('y',yScale(da_center))
-        .attr('font-size','.9vw');
+        .attr('font-size',font_size);
 
     domain_annotation.append('tspan')
         .attr('x',da_x)
@@ -589,7 +589,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('font-weight', 700)
         .append('tspan')
         .text('for both the ')
-        .attr('font-weight', 300);
+        .attr('font-weight', 400);
 
     domain_annotation.append('tspan')
         .attr('x',da_x)
@@ -629,7 +629,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     svg.selectAll('.annotation_hover').attr('opacity',0);
     } else {
         //mobile annotations
-        var x_annotation = xScale(0), y_annotation = -80, font_size = '4.5vw', line_height = '4%';
+        var x_annotation = xScale(0), y_annotation = -100, font_size = 16, line_height = '4%';
 
         //step 1
         var annote1 = svg.append('text')
@@ -745,14 +745,14 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .attr('fill',indicatorColorScale('personal'))
             .append('tspan')
             .text(',')
-            .attr('font-weight', 300)
+            .attr('font-weight', 400)
             .attr('fill','black').append('tspan')
             .text(' social')
             .attr('font-weight', 700)
             .attr('fill',indicatorColorScale('social'))
             .append('tspan')
             .text(', and')
-            .attr('font-weight', 300)
+            .attr('font-weight', 400)
             .attr('fill','black')
             .append('tspan')
             .text(' cultural')
@@ -765,7 +765,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .attr('dy',line_height)
             .text(`scores an individual receives`);
 
-        var y_annotation_bottom = height+50;
+        var y_annotation_bottom = height+40;
 
         var ann4b = svg.append('text')
             .attr('class','ann')
@@ -790,7 +790,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .attr('font-weight', 700)
             .append('tspan')
             .text(' for both the')
-            .attr('font-weight', 300)
+            .attr('font-weight', 400)
 
         ann4b
             .append('tspan')

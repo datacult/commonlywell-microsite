@@ -36,7 +36,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     }
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    var svgWidth = 1400//parseInt(d3.select(selector).style('width'), 10)
     var svgHeight = (svgWidth / 2)
 
     var radius = 4
@@ -51,7 +51,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     } 
 
     // responsive width & height
-    var svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    var svgWidth = 400//parseInt(d3.select(selector).style('width'), 10)
     var svgHeight = (svgWidth*1.4)
 
     var radius = 2
@@ -67,8 +67,9 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     d3.select(".comparison-svg").remove();
 
     const svg = body.append('svg')
-        .attr('height', svgHeight)
-        .attr('width', svgWidth)
+        // .attr('height', svgHeight)
+        // .attr('width', svgWidth)
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .attr('class', 'comparison-svg')
         .append('g')
         .attr('id','comparison-group')
@@ -241,7 +242,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
     if (window.outerWidth > 900){
 
-    var line_height = '2.5%';
+    var line_height = '2.5%', font_size = 14;
     var annotation;
     var da_x = 2.5, da_center = 85;
 
@@ -251,7 +252,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('alignment-baseline','middle')
         .attr('x',xScale(da_x))
         .attr('y',yScale(da_center))
-        .attr('font-size','1vw')
+        .attr('font-size',font_size)
         // .style('opacity',0)
 
         txt1
@@ -287,7 +288,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('alignment-baseline','middle')
         .attr('x',da_x)
         .attr('y',yScale(da_center))
-        .attr('font-size','1vw')
+        .attr('font-size',font_size)
         .style('opacity',0)
 
         txt2
@@ -343,7 +344,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('id','annotation3')
         .attr('x',da_x)
         .attr('y',yScale(da_center))
-        .attr('font-size','1vw')
+        .attr('font-size',font_size)
         .style('opacity',0);
 
         txt3
@@ -355,7 +356,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('font-weight',700)
         .append('tspan')
         .text(`experiencing`)
-        .attr('font-weight',300);
+        .attr('font-weight',400);
 
         txt3
         .append('tspan')
@@ -387,7 +388,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('alignment-baseline','middle')
         .attr('x',da_x)
         .attr('y',yScale(da_center))
-        .attr('font-size','1vw')
+        .attr('font-size',font_size)
         .style('opacity',0)
 
         txt
@@ -414,7 +415,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('font-weight',700)
         .append('tspan')
         .text(` than those`)
-        .attr('font-weight',300)
+        .attr('font-weight',400)
 
         txt
         .append('tspan')
@@ -441,7 +442,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     
     } else {
         //mobile annotations
-        var x_annotation = xScale(0), y_annotation = -120, font_size = '4.5vw', line_height = '4%';
+        var x_annotation = xScale(0), y_annotation = -120, font_size = 16, line_height = '4%';
 
         //step 1
         var ann1 = svg.append('text')
@@ -549,7 +550,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr('font-weight',700)
             .append('tspan')
             .text(`experiencing`)
-            .attr('font-weight',300);
+            .attr('font-weight',400);
 
             ann3
             .append('tspan')
@@ -608,7 +609,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr('font-weight',700)
             .append('tspan')
             .text(` than those`)
-            .attr('font-weight',300)
+            .attr('font-weight',400)
 
             ann4
             .append('tspan')
