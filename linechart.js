@@ -57,7 +57,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         left: 40,
         right: 40,
         top: 150,
-        bottom: 200
+        bottom: 230
     } 
 
     // responsive width & height
@@ -594,23 +594,36 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     domain_annotation.append('tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text(`individual and the provider. These scores,`)
+        .text(`individual and the provider.`)
 
     domain_annotation.append('tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text(`paired with more specific indicators,`)
+        .text(` `)
 
     domain_annotation.append('tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text('enable targeted improvements')
+        .text(`These scores, paired with more`)
+
+    domain_annotation.append('tspan')
+        .attr('x',da_x)
+        .attr('dy',line_height)
+        .text('specific indicators,')
+        .append('tspan')
+        .text(' enable targeted')
         .attr('font-weight', 700);
 
     domain_annotation.append('tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text('throughout the recovery journey.')
+        .text('improvements throughout the')
+        .attr('font-weight', 700);
+        
+    domain_annotation.append('tspan')
+        .attr('x',da_x)
+        .attr('dy',line_height)
+        .text('recovery journey.')
         .attr('font-weight', 700);
 
     svg.selectAll('.annotation_hover').attr('opacity',0);
@@ -783,28 +796,42 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
-            .text(`individual and the provider. These`);
+            .text(`individual and the provider.`)
+
+        
+        ann4b
+            .append('tspan')
+            .attr('x',x_annotation_middle)
+            .attr('dy',line_height)
+            .text(` `);
 
         ann4b
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
-            .text(`scores, paired with more specific`)
+            .text(`These scores, paired with more`);
+
+        // ann4b
+        //     .append('tspan')
+        //     .attr('x',x_annotation_middle)
+        //     .attr('dy',line_height)
+        //     .text(`specific indicators,`)
 
         ann4b
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
-            .text(`indicators, `)
+            .text(`specific indicators, `)
             .append('tspan')
             .text('enable targeted')
+            .attr('font-weight', 700);
 
         ann4b
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
             .text(`improvements throughtout the`)
-            .attr('font-weight', 700)
+            .attr('font-weight', 700);
 
         ann4b
             .append('tspan')
@@ -966,7 +993,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.select('#ann3').attr('opacity',1);
             svg.selectAll('#increase_rect').attr('opacity',1);
             svg.select('#base_rect').attr('opacity',0);
-        } else if (stp = 4){
+        } else if (stp == 4){
             svg.select('#active_rect').attr('opacity',0);
             svg.selectAll('.indicator_group').attr('opacity',1);
             svg.selectAll('.line_group').attr('opacity',0);
