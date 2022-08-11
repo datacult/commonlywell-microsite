@@ -566,7 +566,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     legend_annotation.append('tspan')
         .attr('x',la_x)
         .attr('dy',line_height)
-        .text('an individual receives');
+        .text('an individual receives.');
 
     var da_x = xScale(62), da_center = 37;
 
@@ -763,7 +763,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
-            .text(`scores an individual receives`);
+            .text(`scores an individual receives.`);
 
         var y_annotation_bottom = height+40;
 
