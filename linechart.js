@@ -936,6 +936,9 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.line_group').attr('opacity',1);
             svg.selectAll('.annotation').attr('opacity',1);
             svg.selectAll('.annotation_hover').attr('opacity',0);
+            svg.select('#arrow').style('opacity',1)
+            .transition()
+            .duration(2000);
         } else if (stp == 2){
             svg.select('#active_rect').attr('opacity',0);
             svg.selectAll('.indicator_group').attr('opacity',1);
@@ -944,6 +947,9 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.annotation').attr('opacity',0);
             svg.selectAll('#annotation_legend').attr('opacity',1);
             svg.selectAll('#annotation_domain').attr('opacity',0);
+            svg.select('#arrow').style('opacity',0)
+            .transition()
+            .duration(2000);
 
             indicators.forEach(indicator => { 
         
@@ -960,6 +966,9 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             svg.selectAll('.annotation').attr('opacity',0);
             svg.selectAll('#annotation_legend').attr('opacity',1);
             svg.selectAll('#annotation_domain').attr('opacity',1);
+            svg.select('#arrow').style('opacity',0)
+            .transition()
+            .duration(2000);
 
             indicators.forEach(indicator => {
 

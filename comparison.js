@@ -274,14 +274,18 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('class','tspan')
         .attr('x',xScale(da_x))
         .attr('dy',line_height)
-        .text(`that a setback causes a reset to`)
+        .text(`that a setback`)
+        .append('tspan')
+        .text(` causes a reset to`)
+        .attr('font-weight',700)
 
         txt1
         .append('tspan')
         .attr('class','tspan')
         .attr('x',xScale(da_x))
         .attr('dy',line_height)
-        .text(`an individual's progress.`);
+        .text(`an individual's progress.`)
+        .attr('font-weight',700);
 
     //step 2
     let txt2 = svg.append('text')
@@ -325,6 +329,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`Here, a setback isn't the whole`)
+        .attr('font-weight',700);
         
         txt2
         .append('tspan')
@@ -332,13 +337,15 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('x',da_x)
         .attr('dy',line_height)
         .text(`picture, and doesn't necessarily`)
+        .attr('font-weight',700);
         
         txt2
         .append('tspan')
         .attr('class','tspan')
         .attr('x',da_x)
         .attr('dy',line_height)
-        .text(`result in a decline in score.`);
+        .text(`result in a decline in score.`)
+        .attr('font-weight',700);
 
     //step 3
     var txt3 = svg.append('text')
@@ -473,14 +480,18 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text('setback causes a reset to an');
+            .text('setback')
+            .append('tspan')
+            .text(' causes a reset to an')
+            .attr('font-weight',700);
 
         ann1
             .append('tspan')
             .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text(`individual's progress`);
+            .text(`individual's progress.`)
+            .attr('font-weight',700);
 
         //step 2
         let ann2 = svg.append('text')
@@ -517,6 +528,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`Here, a setback isn't the whole`)
+            .attr('font-weight',700);
             
             ann2
             .append('tspan')
@@ -524,13 +536,15 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .attr('x',x_annotation)
             .attr('dy',line_height)
             .text(`picture, and doesn't necessarily`)
+            .attr('font-weight',700);
             
             ann2
             .append('tspan')
             .attr('class','tspan')
             .attr('x',x_annotation)
             .attr('dy',line_height)
-            .text(`result in a decline in score.`);
+            .text(`result in a decline in score.`)
+            .attr('font-weight',700);
 
         svg.select('#base_rect').style('opacity',1)
 
@@ -909,7 +923,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
             annotation = 'annotation4';
             da_x = 182.5;
-            da_center = 25;
+            da_center = 45;
             
             svg.select('#binary-comparison').style('opacity',0)
             .transition()
