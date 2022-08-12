@@ -643,6 +643,14 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         comp_image.attr('y',yScale(0)-document.getElementById('binary-comparison').getBBox().height);
         document.getElementById('comparison-group').insertBefore(document.getElementById('binary-comparison'), document.getElementById('x-axis-comparison'));
         
+    var arrow_size = 38;
+    svg.append('image')
+        .attr('id','arrow')
+        .attr('href','https://datacult.github.io/commonlywell-microsite/assets/Arrow.svg')
+        .attr('x',xScale(60)-arrow_size/2)
+        .attr('y',yScale(62))
+        .attr('width',arrow_size)
+        .attr('height',arrow_size);
 
     //draw highlights
     var dipstat = d3.group(data, d => d[data_map.group]);
