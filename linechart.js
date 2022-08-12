@@ -481,7 +481,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('text-anchor','end')
         .text('this range');
 
-    var ia_x = width+50, ia_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+increase+8);
+    var ia_x = width+50, ia_y = yScale((bracket[1]-bracket[0])/2+bracket[0]+increase+9.5);
 
     var increase_annotation = svg.append('text')
         .attr('class','annotation')
@@ -516,6 +516,15 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('x',ia_x)
         .attr('dy',line_height)
         .text('four assessments');
+
+    var arrow_size = 38;
+    svg.append('image')
+        .attr('id','arrow')
+        .attr('href','https://datacult.github.io/commonlywell-microsite/assets/Arrow.svg')
+        .attr('x',ia_x)
+        .attr('y',ia_y-arrow_size)
+        .attr('width',arrow_size)
+        .attr('height',arrow_size);
 
     var la_x = xScale(7), la_center = 92;
 

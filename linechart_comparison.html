@@ -33,37 +33,37 @@
         <option value="1">Step 1</option>
         <option value="2">Step 2</option>
         </select>       -->
-        <!-- <div id="linechart"></div>
+        <div id="linechart"></div>
         <div id="active-treatment"></div>
         <div id="base-range"></div>
         <div id="increase-range"></div>
         <div id="individual-highlight"></div>
-        <div id="indicator-highlight"></div> -->
-        <div id="comparison"></div>
+        <div id="indicator-highlight"></div>
+        <!-- <div id="comparison"></div>
         <div id="binary"></div>
         <div id="both"></div>
         <div id="highlight"></div>
-        <div id="late-highlight"></div>
+        <div id="late-highlight"></div> -->
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <!-- <script src="force.js"></script> -->
-    <!-- <script src="linechart.js"></script> -->
-    <script src="comparison.js"></script>
+    <script src="linechart.js"></script>
+    <!-- <script src="comparison.js"></script> -->
     <script>
         async function init(){
             
-            // let data = await d3.csv('../data/full_sample.csv', d3.autoType)
+            let data = await d3.csv('../data/full_sample.csv', d3.autoType)
 
-            // let mapping = {x:'DAYS_FROM_FIRST_ASSESSMENT', y:'TOTAL_RCI_SCORE', y1:'PERSONAL_SCORE', y2:'CULTURAL_SCORE', y3:'SOCIAL_SCORE', group:'GENERIC_PARTICIPANT_ID'}
+            let mapping = {x:'DAYS_FROM_FIRST_ASSESSMENT', y:'TOTAL_RCI_SCORE', y1:'PERSONAL_SCORE', y2:'CULTURAL_SCORE', y3:'SOCIAL_SCORE', group:'GENERIC_PARTICIPANT_ID'}
 
-            // let line_vis = linechart(data, mapping)
+            let line_vis = linechart(data, mapping)
 
 
-            let comp_data = await d3.csv('../data/full_sample.csv', d3.autoType)
+            // let comp_data = await d3.csv('../data/full_sample.csv', d3.autoType)
 
-            let comp_mapping = {x:'DAYS_FROM_FIRST_ASSESSMENT', y:'TOTAL_RCI_SCORE', group:'GENERIC_PARTICIPANT_ID'}
+            // let comp_mapping = {x:'DAYS_FROM_FIRST_ASSESSMENT', y:'TOTAL_RCI_SCORE', group:'GENERIC_PARTICIPANT_ID'}
 
-            let comp_vis = comparison(comp_data, comp_mapping, selector='#comparison',recover = '70')
+            // let comp_vis = comparison(comp_data, comp_mapping, selector='#comparison',recover = '70')
 
             // let force_data = await d3.csv('../data/force_example.csv', d3.autoType)
 

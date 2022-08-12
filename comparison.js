@@ -648,7 +648,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('id','arrow')
         .attr('href','https://datacult.github.io/commonlywell-microsite/assets/Arrow.svg')
         .attr('x',xScale(60)-arrow_size/2)
-        .attr('y',yScale(62))
+        .attr('y',yScale(59.7))
         .attr('width',arrow_size)
         .attr('height',arrow_size);
 
@@ -787,6 +787,9 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             svg.select('#binary-comparison').style('opacity',1)
             .transition()
             .duration(2000);
+            svg.select('#arrow').style('opacity',0)
+            .transition()
+            .duration(2000);
 
             comp_image.attr('y',yScale(0)-document.getElementById('binary-comparison').getBBox().height);
 
@@ -818,6 +821,10 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .transition()
             .duration(2000);
             svg.selectAll('.circle').style('opacity',0)
+            .transition()
+            .duration(2000);
+
+            svg.select('#arrow').style('opacity',0)
             .transition()
             .duration(2000);
 
@@ -853,6 +860,11 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             annotation = 'annotation3';
             da_x = 62.5;
             da_center = 90;
+
+
+            svg.select('#arrow').style('opacity',1)
+            .transition()
+            .duration(2000);
 
             svg.select('#binary-comparison').style('opacity',0)
             .transition()
@@ -904,6 +916,10 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             .duration(2000);
 
             svg.select("#y-axis").attr('opacity',1);
+
+            svg.select('#arrow').style('opacity',0)
+            .transition()
+            .duration(2000);
 
             svg.selectAll('#line_group'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
             .transition()
