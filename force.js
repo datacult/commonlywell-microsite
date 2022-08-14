@@ -24,8 +24,8 @@ let force = ((data, selector = '#force') => {
     }
 
     // responsive width & height
-    const svgWidth = 1400 // parseInt(d3.select(selector).style('width'), 10)
-    const svgHeight = svgWidth / 2.5
+    const svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    const svgHeight = parseInt(d3.select(selector).style('height'), 10)
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -71,9 +71,9 @@ let force = ((data, selector = '#force') => {
 
     const layouts = [
         [{ x: 0.5, y: 0.5 }],
-        [{ x: 0.1, y: 0.5 }, { x: 0.9, y: 0.5 }],
+        [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.5, y: 0.9 }],
-        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }],
+        [{ x: 0.2, y: 0.1 }, { x: 0.8, y: 0.1 }, { x: 0.2, y: 0.9 }, { x: 0.8, y: 0.9 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
     ]
@@ -275,6 +275,28 @@ let force = ((data, selector = '#force') => {
         .attr('opacity', d => d[0] == select ? 1 : 0)
         .attr('pointer-events', 'none')
         .attr('class', 'labels')
+        .call(getTextBox);
+
+    let label_backgrounds = svg.selectAll('.label_backgrounds')
+        .data(label_coords)
+        .join("rect")
+        .attr("x", function (d) { return d.bbox.x })
+        .attr("y", function (d) { return d.bbox.y })
+        .attr("width", function (d) { return d.bbox.width })
+        .attr("height", function (d) { return d.bbox.height })
+        .attr('opacity', d => d[0] == select ? 0.8 : 0)
+        .attr("class", "label_backgrounds")
+        .style("fill", "white");
+
+    labels.call(raise)
+
+    function raise(selection) {
+        selection.each(function (d) { d3.select(this).raise(); })
+    }
+
+    function getTextBox(selection) {
+        selection.each(function (d) { d.bbox = this.getBBox(); })
+    }
 
     /////////////////////////////////////
     ////////////// Legend ///////////////
@@ -285,7 +307,7 @@ let force = ((data, selector = '#force') => {
         INDICATORS: [{ key: 'PERSONAL_SCORE', text: 'Personal Capital' }, { key: 'SOCIAL_SCORE', text: 'Social Capital' }, { key: 'CULTURAL_SCORE', text: 'Cultural Capital' }]
     }
 
-    const legend_width = width / 4
+    const legend_width = width / 6
     const legend_height = 20
     const legend_padding = 50
 
@@ -326,16 +348,31 @@ let force = ((data, selector = '#force') => {
                 .text(d => d)
                 .attr("class", "legend_text" + legend.key)
 
-            const legendAxisScale = d3.scaleLinear()
-                .domain([0, 100])
-                .range([0, legend_width])
+            legend_group.selectAll('.domain_0' + legend.key)
+                .data(['0'])
+                .join('text')
+                .attr('y', -legend_height - 5)
+                .attr('x', (legend_padding * index))
+                .attr('text-anchor', "start")
+                .text(d => d)
+                .attr("class", "domain_0" + legend.key)
 
-            const legend_axis_group = legend_group.append('g')
-                .attr("transform", `translate(${(legend_padding * index)},${-legend_height})`);
+            legend_group.selectAll('.domain_1' + legend.key)
+                .data(['100'])
+                .join('text')
+                .attr('y', -legend_height - 5)
+                .attr('x',  (legend_padding * index) + legend_width)
+                .attr('text-anchor', "end")
+                .text(d => d)
+                .attr("class", "domain_1" + legend.key)
 
-            legend_axis_group
-                .call(d3.axisTop(legendAxisScale).ticks(1).tickSize(0))
-                .call(g => g.select(".domain").remove())
+
+            // const legend_axis_group = legend_group.append('g')
+            //     .attr("transform", `translate(${(legend_padding * index)},${-legend_height})`);
+
+            // legend_axis_group
+            //     .call(d3.axisTop(legendAxisScale).ticks(1).tickSize(0))
+            //     .call(g => g.select(".domain").remove())
         }
     }
 
@@ -515,7 +552,7 @@ let force = ((data, selector = '#force') => {
                     rci = rci_select
                     update()
                     create_legend()
-                }, 1000)
+                }, 1200)
             } else {
                 cluster = 'GENERIC_PARTICIPANT_ID'
                 rci = rci_select
@@ -524,7 +561,7 @@ let force = ((data, selector = '#force') => {
                 setTimeout(() => {
                     cluster = 'metric'
                     update()
-                }, 1000)
+                }, 1200)
             }
 
         } else {
@@ -566,11 +603,10 @@ let force = ((data, selector = '#force') => {
         simulation.stop()
 
         labels
-            .join()
-            .text(d => d[1])
-            .attr('y', d => yScale(d[2].y) + labels_offset)
-            .attr('x', d => xScale(d[2].x))
             .attr('opacity', d => d[0] == select ? 1 : 0)
+
+        label_backgrounds
+            .attr('opacity', d => d[0] == select ? 0.8 : 0)
 
         bubbles
             .filter(d => d.radius == 1e-6)
