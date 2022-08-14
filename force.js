@@ -280,10 +280,11 @@ let force = ((data, selector = '#force') => {
     let label_backgrounds = svg.selectAll('.label_backgrounds')
         .data(label_coords)
         .join("rect")
-        .attr("x", function (d) { return d.bbox.x })
+        .attr("x", function (d) { return d.bbox.x - 5 })
         .attr("y", function (d) { return d.bbox.y })
-        .attr("width", function (d) { return d.bbox.width })
+        .attr("width", function (d) { return d.bbox.width + 10 })
         .attr("height", function (d) { return d.bbox.height })
+        .attr("rx", 4)
         .attr('opacity', d => d[0] == select ? 0.8 : 0)
         .attr("class", "label_backgrounds")
         .style("fill", "white");
