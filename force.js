@@ -45,12 +45,14 @@ let force = ((data, selector = '#force') => {
     //////////////globals///////////////
     ////////////////////////////////////
 
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+
     var simulation;
 
     const transition_time = 750
 
     const labels_offset = -100
-    const radius = 15
+    const radius = isMobile ? 10 : 15
     const metric_strength = 0.3
     const cluster_strength = 1
 
@@ -66,8 +68,6 @@ let force = ((data, selector = '#force') => {
 
     const metrics = ['TOTAL_RCI_SCORE', 'PERSONAL_SCORE', 'SOCIAL_SCORE', 'CULTURAL_SCORE']
 
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
-
     const desktop_layouts = [
         [{ x: 0.5, y: 0.5 }],
         [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
@@ -79,8 +79,8 @@ let force = ((data, selector = '#force') => {
 
     const mobile_layouts = [
         [{ x: 0.5, y: 0.5 }],
-        [{ x: 0.5, y: 0.2 }, { x: 0.5, y: 0.8 }],
-        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.5, y: 0.9 }],
+        [{ x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.5 }, { x: 0.1, y: 0.9 }],
         [{ x: 0.2, y: 0.1 }, { x: 0.8, y: 0.1 }, { x: 0.2, y: 0.9 }, { x: 0.8, y: 0.9 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
