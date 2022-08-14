@@ -303,16 +303,21 @@ let force = ((data, selector = '#force') => {
     ////////////// Legend ///////////////
     /////////////////////////////////////
 
-    const legend_options = {
-        TOTAL_RCI_SCORE: [{ key: 'TOTAL_RCI_SCORE', text: 'Total RCI' }],
-        INDICATORS: [{ key: 'PERSONAL_SCORE', text: 'Personal Capital' }, { key: 'SOCIAL_SCORE', text: 'Social Capital' }, { key: 'CULTURAL_SCORE', text: 'Cultural Capital' }]
-    }
-
     const legend_width = width / 6
     const legend_height = 20
-    const legend_padding = 50
 
-    const legendScale = d3.scaleLinear().domain([0, legend_width]).range([0, 100])
+    const legend_options = {
+        TOTAL_RCI_SCORE: [{ key: 'TOTAL_RCI_SCORE', text: 'Total RCI', transform_x: (width * 0.5) - (legend_width / 2) }],
+        INDICATORS: [
+            { key: 'PERSONAL_SCORE', text: 'Personal Capital', transform_x: (width * 0.2) - (legend_width / 2) },
+            { key: 'SOCIAL_SCORE', text: 'Social Capital', transform_x: (width * 0.5) - (legend_width / 2) },
+            { key: 'CULTURAL_SCORE', text: 'Cultural Capital', transform_x: (width * 0.8) - (legend_width / 2) }
+        ]
+    }
+
+    const legendScale = d3.scaleLinear()
+        .domain([0, legend_width])
+        .range([0, 100])
 
     const legend_container_group = svg.append("g")
 
@@ -325,8 +330,8 @@ let force = ((data, selector = '#force') => {
             let legend = legend_options[rci == 'true' ? 'TOTAL_RCI_SCORE' : 'INDICATORS'][index]
 
             const legend_group = legend_container_group.append("g")
-                .attr("transform", `translate(${legend_width * index},${height + margin.bottom - (legend_height * 2)})`)
-                .attr("id", "legend-x-axis")
+                .attr("transform", `translate(${legend.transform_x},${height + margin.bottom - (legend_height * 2)})`)
+                .attr("id", "legend")
 
             const legend_data = new Array(Math.floor(legend_width)).fill(1)
 
@@ -335,8 +340,8 @@ let force = ((data, selector = '#force') => {
                 .join('line')
                 .attr('y1', -legend_height) // legend height
                 .attr('y2', 0)
-                .attr('x1', (d, i) => (legend_padding * index) + i)
-                .attr('x2', (d, i) => (legend_padding * index) + i)
+                .attr('x1', (d, i) => i)
+                .attr('x2', (d, i) => i)
                 .attr("stroke", (d, i) => colorScales[legend.key](legendScale(i)))
                 .attr("class", "colorlegend" + legend.key)
 
@@ -344,7 +349,7 @@ let force = ((data, selector = '#force') => {
                 .data([legend.text])
                 .join('text')
                 .attr('y', legend_height)
-                .attr('x', (legend_padding * index) + (legend_width / 2))
+                .attr('x', (legend_width / 2))
                 .attr('text-anchor', "middle")
                 .text(d => d)
                 .attr("class", "legend_text" + legend.key)
@@ -353,7 +358,7 @@ let force = ((data, selector = '#force') => {
                 .data(['0'])
                 .join('text')
                 .attr('y', -legend_height - 5)
-                .attr('x', (legend_padding * index))
+                .attr('x', 0)
                 .attr('text-anchor', "start")
                 .text(d => d)
                 .attr("class", "domain_0" + legend.key)
@@ -362,7 +367,7 @@ let force = ((data, selector = '#force') => {
                 .data(['100'])
                 .join('text')
                 .attr('y', -legend_height - 5)
-                .attr('x',  (legend_padding * index) + legend_width)
+                .attr('x', legend_width)
                 .attr('text-anchor', "end")
                 .text(d => d)
                 .attr("class", "domain_1" + legend.key)
