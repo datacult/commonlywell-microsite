@@ -2,6 +2,8 @@
 
 let force = ((data, selector = '#force') => {
 
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+
     ////////////////////////////////////
     ///////////// options //////////////
     ////////////////////////////////////
@@ -16,12 +18,18 @@ let force = ((data, selector = '#force') => {
     body.html("")
 
     // margins for SVG
-    const margin = {
+    const margin = isMobile ? {
         left: 100,
         right: 100,
         top: 100,
         bottom: 200
+    } : {
+        left: 50,
+        right: 50,
+        top: 50,
+        bottom: 100
     }
+
 
     // responsive width & height
     const svgWidth = parseInt(d3.select(selector).style('width'), 10)
@@ -44,8 +52,6 @@ let force = ((data, selector = '#force') => {
     ////////////////////////////////////
     //////////////globals///////////////
     ////////////////////////////////////
-
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
 
     var simulation;
 
