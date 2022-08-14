@@ -36,9 +36,6 @@ let force = ((data, selector = '#force') => {
     d3.select(`${selector} svg`).remove();
 
     const svg = d3.select(selector)
-        // .append('svg')
-        // .attr('height', svgHeight)
-        // .attr('width', svgWidth)
         .append('svg')
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .append('g')
@@ -69,7 +66,9 @@ let force = ((data, selector = '#force') => {
 
     const metrics = ['TOTAL_RCI_SCORE', 'PERSONAL_SCORE', 'SOCIAL_SCORE', 'CULTURAL_SCORE']
 
-    const layouts = [
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+
+    const desktop_layouts = [
         [{ x: 0.5, y: 0.5 }],
         [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.5, y: 0.9 }],
@@ -77,6 +76,17 @@ let force = ((data, selector = '#force') => {
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
     ]
+
+    const mobile_layouts = [
+        [{ x: 0.5, y: 0.5 }],
+        [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.5, y: 0.9 }],
+        [{ x: 0.2, y: 0.1 }, { x: 0.8, y: 0.1 }, { x: 0.2, y: 0.9 }, { x: 0.8, y: 0.9 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
+    ]
+
+    const layouts = isMobile ? mobile_layouts : desktop_layouts
 
     const colors = {
         TOTAL_RCI_SCORE: ['white', '#1F547A'],
@@ -303,7 +313,7 @@ let force = ((data, selector = '#force') => {
     ////////////// Legend ///////////////
     /////////////////////////////////////
 
-    const legend_width = width / 6
+    const legend_width = isMobile ? width / 4 : width / 6
     const legend_height = 20
 
     const legend_options = {
