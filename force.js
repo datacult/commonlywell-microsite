@@ -19,15 +19,15 @@ let force = ((data, selector = '#force') => {
 
     // margins for SVG
     const margin = isMobile ? {
-        left: 100,
-        right: 100,
-        top: 100,
-        bottom: 200
-    } : {
         left: 50,
         right: 50,
         top: 50,
         bottom: 100
+    } : {
+        left: 100,
+        right: 100,
+        top: 100,
+        bottom: 200
     }
 
 
