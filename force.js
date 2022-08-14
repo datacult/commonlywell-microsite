@@ -319,9 +319,9 @@ let force = ((data, selector = '#force') => {
     const legend_options = {
         TOTAL_RCI_SCORE: [{ key: 'TOTAL_RCI_SCORE', text: 'Total RCI', transform_x: (width * 0.5) - (legend_width / 2) }],
         INDICATORS: [
-            { key: 'PERSONAL_SCORE', text: 'Personal Capital', transform_x: (width * isMobile ? 0.1 : 0.2) - (legend_width / 2) },
+            { key: 'PERSONAL_SCORE', text: 'Personal Capital', transform_x: (width * (isMobile ? 0.1 : 0.2)) - (legend_width / 2) },
             { key: 'SOCIAL_SCORE', text: 'Social Capital', transform_x: (width * 0.5) - (legend_width / 2) },
-            { key: 'CULTURAL_SCORE', text: 'Cultural Capital', transform_x: (width * isMobile ? 0.9 : 0.8) - (legend_width / 2) }
+            { key: 'CULTURAL_SCORE', text: 'Cultural Capital', transform_x: (width * (isMobile ? 0.9 : 0.8)) - (legend_width / 2) }
         ]
     }
 
