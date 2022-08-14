@@ -313,15 +313,15 @@ let force = ((data, selector = '#force') => {
     ////////////// Legend ///////////////
     /////////////////////////////////////
 
-    const legend_width = isMobile ? width / 4 : width / 6
+    const legend_width = isMobile ? width / 3 : width / 6
     const legend_height = 20
 
     const legend_options = {
         TOTAL_RCI_SCORE: [{ key: 'TOTAL_RCI_SCORE', text: 'Total RCI', transform_x: (width * 0.5) - (legend_width / 2) }],
         INDICATORS: [
-            { key: 'PERSONAL_SCORE', text: 'Personal Capital', transform_x: (width * 0.2) - (legend_width / 2) },
+            { key: 'PERSONAL_SCORE', text: 'Personal Capital', transform_x: (width * isMobile ? 0.1 : 0.2) - (legend_width / 2) },
             { key: 'SOCIAL_SCORE', text: 'Social Capital', transform_x: (width * 0.5) - (legend_width / 2) },
-            { key: 'CULTURAL_SCORE', text: 'Cultural Capital', transform_x: (width * 0.8) - (legend_width / 2) }
+            { key: 'CULTURAL_SCORE', text: 'Cultural Capital', transform_x: (width * isMobile ? 0.9 : 0.8) - (legend_width / 2) }
         ]
     }
 
@@ -382,13 +382,6 @@ let force = ((data, selector = '#force') => {
                 .text(d => d)
                 .attr("class", "domain_1" + legend.key)
 
-
-            // const legend_axis_group = legend_group.append('g')
-            //     .attr("transform", `translate(${(legend_padding * index)},${-legend_height})`);
-
-            // legend_axis_group
-            //     .call(d3.axisTop(legendAxisScale).ticks(1).tickSize(0))
-            //     .call(g => g.select(".domain").remove())
         }
     }
 
