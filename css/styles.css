@@ -49,6 +49,10 @@ rect, path, line {
     /* width:50% */
 }
 
+#force {
+    height:600px
+}
+
 #comparison, #linechart {
     position: sticky;
     top:0;

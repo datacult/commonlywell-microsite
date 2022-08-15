@@ -2,6 +2,8 @@
 
 let force = ((data, selector = '#force') => {
 
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+
     ////////////////////////////////////
     ///////////// options //////////////
     ////////////////////////////////////
@@ -16,16 +18,22 @@ let force = ((data, selector = '#force') => {
     body.html("")
 
     // margins for SVG
-    const margin = {
+    const margin = isMobile ? {
+        left: 50,
+        right: 50,
+        top: 50,
+        bottom: 100
+    } : {
         left: 100,
         right: 100,
         top: 100,
         bottom: 200
     }
 
+
     // responsive width & height
-    const svgWidth = 1400 // parseInt(d3.select(selector).style('width'), 10)
-    const svgHeight = svgWidth / 2.5
+    const svgWidth = parseInt(d3.select(selector).style('width'), 10)
+    const svgHeight = parseInt(d3.select(selector).style('height'), 10)
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -36,9 +44,6 @@ let force = ((data, selector = '#force') => {
     d3.select(`${selector} svg`).remove();
 
     const svg = d3.select(selector)
-        // .append('svg')
-        // .attr('height', svgHeight)
-        // .attr('width', svgWidth)
         .append('svg')
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .append('g')
@@ -53,7 +58,7 @@ let force = ((data, selector = '#force') => {
     const transition_time = 750
 
     const labels_offset = -100
-    const radius = 15
+    const radius = isMobile ? 10 : 15
     const metric_strength = 0.3
     const cluster_strength = 1
 
@@ -69,14 +74,25 @@ let force = ((data, selector = '#force') => {
 
     const metrics = ['TOTAL_RCI_SCORE', 'PERSONAL_SCORE', 'SOCIAL_SCORE', 'CULTURAL_SCORE']
 
-    const layouts = [
+    const desktop_layouts = [
         [{ x: 0.5, y: 0.5 }],
-        [{ x: 0.1, y: 0.5 }, { x: 0.9, y: 0.5 }],
+        [{ x: 0.2, y: 0.5 }, { x: 0.8, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.5, y: 0.9 }],
-        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }],
+        [{ x: 0.2, y: 0.1 }, { x: 0.8, y: 0.1 }, { x: 0.2, y: 0.9 }, { x: 0.8, y: 0.9 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
         [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
     ]
+
+    const mobile_layouts = [
+        [{ x: 0.5, y: 0.5 }],
+        [{ x: 0.5, y: 0.2 }, { x: 0.5, y: 0.8 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.5 }, { x: 0.1, y: 0.9 }],
+        [{ x: 0.1, y: 0.2 }, { x: 0.9, y: 0.2 }, { x: 0.1, y: 0.8 }, { x: 0.9, y: 0.8 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.5 }],
+        [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }, { x: 0.1, y: 0.9 }, { x: 0.9, y: 0.9 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.9 }]
+    ]
+
+    const layouts = isMobile ? mobile_layouts : desktop_layouts
 
     const colors = {
         TOTAL_RCI_SCORE: ['white', '#1F547A'],
@@ -275,21 +291,49 @@ let force = ((data, selector = '#force') => {
         .attr('opacity', d => d[0] == select ? 1 : 0)
         .attr('pointer-events', 'none')
         .attr('class', 'labels')
+        .call(getTextBox);
+
+    let label_backgrounds = svg.selectAll('.label_backgrounds')
+        .data(label_coords)
+        .join("rect")
+        .attr("x", function (d) { return d.bbox.x - 5 })
+        .attr("y", function (d) { return d.bbox.y })
+        .attr("width", function (d) { return d.bbox.width + 10 })
+        .attr("height", function (d) { return d.bbox.height })
+        .attr("rx", 4)
+        .attr('opacity', d => d[0] == select ? 0.8 : 0)
+        .attr("class", "label_backgrounds")
+        .style("fill", "white");
+
+    labels.call(raise)
+
+    function raise(selection) {
+        selection.each(function (d) { d3.select(this).raise(); })
+    }
+
+    function getTextBox(selection) {
+        selection.each(function (d) { d.bbox = this.getBBox(); })
+    }
 
     /////////////////////////////////////
     ////////////// Legend ///////////////
     /////////////////////////////////////
 
+    const legend_width = isMobile ? width / 3 : width / 6
+    const legend_height = 20
+
     const legend_options = {
-        TOTAL_RCI_SCORE: [{ key: 'TOTAL_RCI_SCORE', text: 'Total RCI' }],
-        INDICATORS: [{ key: 'PERSONAL_SCORE', text: 'Personal Capital' }, { key: 'SOCIAL_SCORE', text: 'Social Capital' }, { key: 'CULTURAL_SCORE', text: 'Cultural Capital' }]
+        TOTAL_RCI_SCORE: [{ key: 'TOTAL_RCI_SCORE', text: 'Total RCI', transform_x: (width * 0.5) - (legend_width / 2) }],
+        INDICATORS: [
+            { key: 'PERSONAL_SCORE', text: 'Personal Capital', transform_x: (width * (isMobile ? 0.1 : 0.2)) - (legend_width / 2) },
+            { key: 'SOCIAL_SCORE', text: 'Social Capital', transform_x: (width * 0.5) - (legend_width / 2) },
+            { key: 'CULTURAL_SCORE', text: 'Cultural Capital', transform_x: (width * (isMobile ? 0.9 : 0.8)) - (legend_width / 2) }
+        ]
     }
 
-    const legend_width = width / 4
-    const legend_height = 20
-    const legend_padding = 50
-
-    const legendScale = d3.scaleLinear().domain([0, legend_width]).range([0, 100])
+    const legendScale = d3.scaleLinear()
+        .domain([0, legend_width])
+        .range([0, 100])
 
     const legend_container_group = svg.append("g")
 
@@ -302,8 +346,8 @@ let force = ((data, selector = '#force') => {
             let legend = legend_options[rci == 'true' ? 'TOTAL_RCI_SCORE' : 'INDICATORS'][index]
 
             const legend_group = legend_container_group.append("g")
-                .attr("transform", `translate(${legend_width * index},${height + margin.bottom - (legend_height * 2)})`)
-                .attr("id", "legend-x-axis")
+                .attr("transform", `translate(${legend.transform_x},${height + margin.bottom - (legend_height * 2)})`)
+                .attr("id", "legend")
 
             const legend_data = new Array(Math.floor(legend_width)).fill(1)
 
@@ -312,8 +356,8 @@ let force = ((data, selector = '#force') => {
                 .join('line')
                 .attr('y1', -legend_height) // legend height
                 .attr('y2', 0)
-                .attr('x1', (d, i) => (legend_padding * index) + i)
-                .attr('x2', (d, i) => (legend_padding * index) + i)
+                .attr('x1', (d, i) => i)
+                .attr('x2', (d, i) => i)
                 .attr("stroke", (d, i) => colorScales[legend.key](legendScale(i)))
                 .attr("class", "colorlegend" + legend.key)
 
@@ -321,21 +365,29 @@ let force = ((data, selector = '#force') => {
                 .data([legend.text])
                 .join('text')
                 .attr('y', legend_height)
-                .attr('x', (legend_padding * index) + (legend_width / 2))
+                .attr('x', (legend_width / 2))
                 .attr('text-anchor', "middle")
                 .text(d => d)
                 .attr("class", "legend_text" + legend.key)
 
-            const legendAxisScale = d3.scaleLinear()
-                .domain([0, 100])
-                .range([0, legend_width])
+            legend_group.selectAll('.domain_0' + legend.key)
+                .data(['0'])
+                .join('text')
+                .attr('y', -legend_height - 5)
+                .attr('x', 0)
+                .attr('text-anchor', "start")
+                .text(d => d)
+                .attr("class", "domain_0" + legend.key)
 
-            const legend_axis_group = legend_group.append('g')
-                .attr("transform", `translate(${(legend_padding * index)},${-legend_height})`);
+            legend_group.selectAll('.domain_1' + legend.key)
+                .data(['100'])
+                .join('text')
+                .attr('y', -legend_height - 5)
+                .attr('x', legend_width)
+                .attr('text-anchor', "end")
+                .text(d => d)
+                .attr("class", "domain_1" + legend.key)
 
-            legend_axis_group
-                .call(d3.axisTop(legendAxisScale).ticks(1).tickSize(0))
-                .call(g => g.select(".domain").remove())
         }
     }
 
@@ -515,7 +567,7 @@ let force = ((data, selector = '#force') => {
                     rci = rci_select
                     update()
                     create_legend()
-                }, 1000)
+                }, 1200)
             } else {
                 cluster = 'GENERIC_PARTICIPANT_ID'
                 rci = rci_select
@@ -524,7 +576,7 @@ let force = ((data, selector = '#force') => {
                 setTimeout(() => {
                     cluster = 'metric'
                     update()
-                }, 1000)
+                }, 1200)
             }
 
         } else {
@@ -566,11 +618,10 @@ let force = ((data, selector = '#force') => {
         simulation.stop()
 
         labels
-            .join()
-            .text(d => d[1])
-            .attr('y', d => yScale(d[2].y) + labels_offset)
-            .attr('x', d => xScale(d[2].x))
             .attr('opacity', d => d[0] == select ? 1 : 0)
+
+        label_backgrounds
+            .attr('opacity', d => d[0] == select ? 0.8 : 0)
 
         bubbles
             .filter(d => d.radius == 1e-6)
