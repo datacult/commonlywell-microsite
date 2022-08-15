@@ -664,7 +664,8 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
         .attr('x',xScale(60)-arrow_size/2)
         .attr('y',yScale(59.7))
         .attr('width',arrow_size)
-        .attr('height',arrow_size);
+        .attr('height',arrow_size)
+        .style('opacity',0);
 
     //draw highlights
     var dipstat = d3.group(data, d => d[data_map.group]);
