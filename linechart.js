@@ -243,7 +243,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y',0)
         .attr('height',height)
         .attr('width',xScale(63))
-        .attr('fill','#F1F2F3')
+        .attr('fill','#e4e4e4')
         .attr('opacity',0);
 
     svg.append('rect')
@@ -253,7 +253,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y',yScale(bracket[1]))
         .attr('height',yScale(bracket[0])-yScale(bracket[1]))
         .attr('width',xScale(20))
-        .attr('fill','#F1F2F3')
+        .attr('fill','#e4e4e4')
         .attr('opacity',0);
     
     svg.append('rect')
@@ -263,7 +263,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y',yScale(bracket[1]+increase))
         .attr('height',yScale(bracket[0]+increase)-yScale(bracket[1]+increase))
         .attr('width',xScale(20))
-        .attr('fill','#F1F2F3')
+        .attr('fill','#e4e4e4')
         .attr('opacity',0);
 
     ////////////////////////////////////
@@ -339,7 +339,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y',yScale(bracket[1]+increase))
         .attr('height',yScale(bracket[0]+increase)-yScale(bracket[1]+increase))
         .attr('width',xScale(20)-(width+15-xScale(80)))
-        .attr('fill','#F1F2F3')
+        .attr('fill','#e4e4e4')
         .attr('opacity',0);
 
     if (window.outerWidth > 900){
@@ -371,7 +371,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
         .attr('y',rect_size.y-padding)
         .attr('height',rect_size.height+padding*2)
         .attr('width',rect_size.width+padding*2)
-        .style('fill','#F1F2F3');
+        .style('fill','#e4e4e4');
 
     document.getElementById('line-group').insertBefore(document.getElementById('treatment_rect'), document.getElementById('treatment_annotation'));
     
