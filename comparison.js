@@ -831,7 +831,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             draw(tickVal,tickLabels);
 
             annotation = 'annotation2';
-            da_x = 50;
+            da_x = 62.5;
             da_center = 87;
             
             svg.selectAll('.line_group').style('opacity',0)
