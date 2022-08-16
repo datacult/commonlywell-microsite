@@ -746,9 +746,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
     //annotation function
     function draw_annotation(annotation,x,center){
         svg.select('#'+annotation)
-        .style('opacity',1)
-        .transition()
-        .duration(2000);
+        .style('opacity',1);
 
         if (window.outerWidth > 900){
             svg.select('#'+annotation)
@@ -791,38 +789,20 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             // .attr('height',img_height);
 
             svg.selectAll('.line_group').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('.line_fill').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('.circle').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('.tick-line').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select("#y-axis").attr('opacity',0);
 
             svg.select('#binary-comparison').style('opacity',1)
-            .transition()
-            .duration(2000);
             svg.select('#arrow').style('opacity',0)
-            .transition()
-            .duration(2000);
 
             comp_image.attr('y',yScale(0)-document.getElementById('binary-comparison').getBBox().height);
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation2').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation3').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation4').style('opacity',0)
-            .transition()
-            .duration(2000);
 
         } else if (step == 2){
 
@@ -835,41 +815,21 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             da_center = 87;
             
             svg.selectAll('.line_group').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('.line_fill').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('.circle').style('opacity',0)
-            .transition()
-            .duration(2000);
 
             svg.select('#arrow').style('opacity',0)
-            .transition()
-            .duration(2000);
 
             svg.select("#y-axis").attr('opacity',1);
 
             svg.select('#binary-comparison').style('opacity',.75)
-            .transition()
-            .duration(2000);
             svg.select('#line_group'+dip_ids[0]).style('opacity',.75)
-            .transition()
-            .duration(2000);
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',.75)
-            .transition()
-            .duration(2000);
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation3').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation4').style('opacity',0)
-            .transition()
-            .duration(2000);
 
         } else if (step == 3){
 
@@ -883,43 +843,21 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
 
             svg.select('#arrow').style('opacity',1)
-            .transition()
-            .duration(2000);
 
-            svg.select('#binary-comparison').style('opacity',0)
-            .transition()
-            .duration(2000);
+            svg.select('#binary-comparison').style('opacity',0);
             svg.selectAll('#line_group'+dip_ids[0]).style('opacity',1)
-            .transition()
-            .duration(2000);
             svg.selectAll('#line_fill'+dip_ids[0]).style('opacity',1)
-            .transition()
-            .duration(2000);
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',1)
-            .transition()
-            .duration(2000);
             svg.selectAll('#line_group'+dip_ids[1]).style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('#line_fill'+dip_ids[1]).style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('#circle'+dip_ids[1]).style('opacity',0)
-            .transition()
-            .duration(2000);
 
             svg.select("#y-axis").attr('opacity',1);
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation2').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation4').style('opacity',0)
-            .transition()
-            .duration(2000);
 
         } else {
 
@@ -931,45 +869,23 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
             da_x = 182.5;
             da_center = 45;
             
-            svg.select('#binary-comparison').style('opacity',0)
-            .transition()
-            .duration(2000);
+            svg.select('#binary-comparison').style('opacity',0);
 
             svg.select("#y-axis").attr('opacity',1);
 
             svg.select('#arrow').style('opacity',0)
-            .transition()
-            .duration(2000);
 
             svg.selectAll('#line_group'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
-            .transition()
-            .duration(2000);
             svg.selectAll('#line_fill'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
-            .transition()
-            .duration(2000);
             svg.selectAll('#circle'+dip_ids[1]).style('opacity',1).attr('transform','translate('+xScale(0)+' 0)')
-            .transition()
-            .duration(2000);
             svg.selectAll('#line_group'+dip_ids[0]).style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('#line_fill'+dip_ids[0]).style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',0)
-            .transition()
-            .duration(2000);
 
             draw_annotation(annotation,da_x,da_center)
             svg.select('#annotation1').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation2').style('opacity',0)
-            .transition()
-            .duration(2000);
             svg.select('#annotation3').style('opacity',0)
-            .transition()
-            .duration(2000);
         }
 
         
