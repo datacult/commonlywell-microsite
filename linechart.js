@@ -18,12 +18,12 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
     function compare(a, b) {
         if (a[data_map.x] < b[data_map.x]) {
           return -1;
-        }
-        if (a[data_map.x] <= b[data_map.x]) {
+        } else if (a[data_map.x] > b[data_map.x]) {
           return 1;
+        } else {
+          // a must be equal to b
+          return 0;
         }
-        // a must be equal to b
-        return 0;
       }
 
     data = data.sort(compare);
