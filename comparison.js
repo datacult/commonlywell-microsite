@@ -822,7 +822,7 @@ let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value
 
             svg.select("#y-axis").attr('opacity',1);
 
-            svg.select('#binary-comparison').style('opacity',.75)
+            svg.select('#binary-comparison').style('opacity',.5)
             svg.select('#line_group'+dip_ids[0]).style('opacity',.75)
             svg.selectAll('#circle'+dip_ids[0]).style('opacity',.75)
 
