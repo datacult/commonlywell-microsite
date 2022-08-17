@@ -839,7 +839,7 @@ let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'
             .append('tspan')
             .attr('x',x_annotation_middle)
             .attr('dy',line_height)
-            .text(`improvements throughtout the`)
+            .text(`improvements throughout the`)
             .attr('font-weight', 700);
 
         ann4b
