@@ -263,6 +263,9 @@ let force = ((data, selector = '#force') => {
                 .selectAll('text')
                 .remove()
 
+            label_backgrounds.call(raise)
+            labels.call(raise)
+
             simulation.restart()
 
         })
