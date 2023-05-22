@@ -1,3 +1,6 @@
+// © 2023 Data Culture
+// Released under the ISC license.
+// https://studio.datacult.com/ 
 'use strict'
 
 let comparison = ((data, data_map = {x:'x_value', y:'y_value', group:'step_value'}, selector = '#comparison', recover = 'XX',peak = 20) => {

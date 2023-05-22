@@ -1,3 +1,6 @@
+// © 2023 Data Culture
+// Released under the ISC license.
+// https://studio.datacult.com/ 
 'use strict'
 
 let linechart = ((data, data_map = {x:'x_value', y:'y_value', y1:'y_value', y2:'y_value', y3:'y_value', group:'step_value'}, selector = '#linechart') => {
